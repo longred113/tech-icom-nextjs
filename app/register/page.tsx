@@ -1,20 +1,21 @@
 import Link from "next/link";
-import RegisterForm from "../component/register-form";
+import RegisterForm from "../components/register-form";
+import Layout from "../components/Layout";
 
 export default function RegisterPage() {
     return (
-        <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center md:h-screen">
-            <div className="bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl">
-                <div className="w-3/5 p-5">
-                    <RegisterForm />
-                </div>
-                <div className="w-2/5 bg-yellow-300 text-white rounded-tr-2xl rounded-br-2xl py-36 px-12">
-                    <h2 className="text-3xl font-bold mb-2">Hello</h2>
-                    <div className="border-2 w-20 border-white inline-block mb-2"></div>
-                    <p className="mb-10">You have an account? Lets Login now </p>
-                    <Link href="/login" className="border-2 border-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-yellow-300">Sign In</Link>
+        <Layout>
+            <div className="flex flex-col items-center justify-center w-full flex-1 md:p-20 p-5 text-center">
+                <div className="bg-white rounded-2xl shadow-2xl flex max-w-4xl">
+                    <div className="w-full p-5">
+                        <RegisterForm />
+                        <div>
+                            <span>Bạn đã có tài khoản?</span>
+                            <Link href="/login" className="text-yellow-400 hover:text-green-300">Đăng nhập</Link>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </main>
+        </Layout>
     );
 }

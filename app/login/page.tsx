@@ -1,20 +1,21 @@
 import Link from "next/link";
-import LoginForm from "../component/login-form";
+import LoginForm from "../components/login-form";
+import Layout from "../components/Layout";
 
 export default function LoginPage() {
     return (
-        <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center md:h-screen">
-            <div className="bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl">
-                <div className="w-3/5 p-5">
-                    <LoginForm />
-                </div>
-                <div className="w-2/5 bg-yellow-300 text-white rounded-tr-2xl rounded-br-2xl py-36 px-12">
-                    <h2 className="text-3xl font-bold mb-2">Hello</h2>
-                    <div className="border-2 w-20 border-white inline-block mb-2"></div>
-                    <p className="mb-10">Do not have account yet? Lets create a new one </p>
-                    <Link href="/register" className="border-2 border-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-yellow-300">Sign Up</Link>
+        <Layout>
+            <div className="flex flex-col items-center justify-center w-full flex-1 md:p-20 p-5 text-center">
+                <div className="bg-white rounded-2xl shadow-2xl flex justify-center max-w-4xl">
+                    <div className="w-full p-5">
+                        <LoginForm />
+                        <div>
+                            <span>Bạn chưa có tài khoản?</span>
+                            <Link href="/register" className="text-yellow-400 hover:text-green-300">Đăng ký</Link>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </main>
+        </Layout>
     );
 }

@@ -8,7 +8,7 @@ import { FaFacebook, FaGoogle, FaLinkedinIn, FaRegEnvelope } from "react-icons/f
 import { IoMdPerson } from "react-icons/io";
 import { MdLockOutline } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/ReactToastify.min.css';
 // import { FaRegEnvelope } from "react-icons/fa6";
 // import { IoMdPerson } from "react-icons/io";
 // import { MdLockOutline } from "react-icons/md";
@@ -48,10 +48,10 @@ export default function RegisterForm() {
     }
     return (
         <div>
-            <div className="text-left font-bold"><span className="text-yellow-300">Company</span>Name</div>
+            <div className="text-left font-bold"><span className="text-gray-800">Company</span>Name</div>
             <div className="py-10">
-                <h2 className="text-3xl font-bold text-yellow-300 mb-2">Sign Up your new account</h2>
-                <div className="border-2 w-20 border-yellow-300 inline-block mb-2"></div>
+                <h2 className="text-3xl font-bold text-gray-800 mb-2">Đăng ký</h2>
+                <div className="border-2 w-20 border-gray-800 inline-block mb-2"></div>
                 {/* <div className="flex justify-center my-2">
                     <Link href="" className="border-2 border-grey-200 rounded-full p-3 mx-1">
                         <FaFacebook />
@@ -68,7 +68,7 @@ export default function RegisterForm() {
                     <form action={register}>
                         <div className="bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-2xl">
                             <IoMdPerson className="m-2" />
-                            <input type="name" required name="name" placeholder="Name" className="bg-gray-100 outline-none text-sm flex-1" />
+                            <input type="name" required name="name" placeholder="Tên" className="bg-gray-100 outline-none text-sm flex-1" />
                         </div>
                         <div className="bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-2xl">
                             <FaRegEnvelope className="m-2" />
@@ -76,11 +76,11 @@ export default function RegisterForm() {
                         </div>
                         <div className="bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-2xl">
                             <MdLockOutline className="m-2" />
-                            <input type="password" required name="password" placeholder="Password" className="bg-gray-100 outline-none text-sm flex-1" />
+                            <input type="password" required name="password" placeholder="Mật khẩu" className="bg-gray-100 outline-none text-sm flex-1" />
                         </div>
                         <div className="bg-gray-100 w-64 p-2 flex items-center mb-5 rounded-2xl">
                             <MdLockOutline className="m-2" />
-                            <input type="password" required name="passwordConfirm" placeholder="Confirm Password" className="bg-gray-100 outline-none text-sm flex-1" />
+                            <input type="password" required name="passwordConfirm" placeholder="Xác nhận mật khẩu" className="bg-gray-100 outline-none text-sm flex-1" />
                         </div>
                         <RegisterButton />
                     </form>
@@ -94,8 +94,8 @@ function RegisterButton() {
     const { pending } = useFormStatus();
     return (
         <>
-            <button type="submit" disabled={pending} className="bg-yellow-300 p-3 border-2 border-yellow-300 rounded-full px-12 py-2 font-semibold hover:bg-white hover:text-yellow-300 text-white">
-                {pending ? "Loading..." : "Sign Up"}
+            <button type="submit" disabled={pending} className="bg-gray-800 p-3 border-2 border-gray-800 rounded-full px-12 py-2 font-semibold hover:bg-white hover:text-gray-800 text-white">
+                {pending ? "Đang tải..." : "Đăng ký"}
             </button>
             <ToastContainer />
         </>

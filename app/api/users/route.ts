@@ -1,10 +1,11 @@
+import { BASE_URL } from "@/other/axios";
 import { NextApiRequest } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const param = url.searchParams.get("param");
-    const response = await fetch('http://127.0.0.1:8000/api/user/profile', {
+    const response = await fetch(`${BASE_URL}/api/user/profile`, {
         headers: {
             'Content-Type': 'application/json',
             "Authorization": `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3VzZXIvbG9naW4iLCJpYXQiOjE3MTYyODIyODIsImV4cCI6MTcxNjI4NTg4MiwibmJmIjoxNzE2MjgyMjgyLCJqdGkiOiJzSW5oanA0Z2p1U2tTVTc4Iiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.T4frq-ZrkYk6LA0JSWrRiLixpUF61wVunobMl7_kpW4`
@@ -18,7 +19,7 @@ export async function POST(req: Request) {
     const param = url.searchParams.get("param");
     const body = await req.json();
     if (param === "LOGIN") {
-        const response = await fetch('http://127.0.0.1:8000/api/user/login', {
+        const response = await fetch(`${BASE_URL}/api/user/login`, {
             headers: {
                 "Content-Type": 'application/json',
             },
@@ -33,7 +34,7 @@ export async function POST(req: Request) {
     }
 
     if (param === "REGISTER") {
-        const response = await fetch('http://127.0.0.1:8000/api/user/register', {
+        const response = await fetch(`${BASE_URL}/api/user/register`, {
             headers: {
                 "Content-Type": 'application/json',
                 "accept": "application/json"

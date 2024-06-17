@@ -24,11 +24,17 @@ export default function LoginForm() {
                     }
                 ),
             });
-            const data = await response.json();
-            if (data.data.status === true) {
+            const authData = await response.json();
+            if (authData.data.status === 'success') {
+                document.cookie = `Auth-token=${authData.data.data.token}`
+                const userData = {
+                    name: authData.data.data.name,
+                    email: authData.data.data.email,
+                }
+                localStorage.setItem("userData", JSON.stringify(userData));
                 router.push("/");
             } else {
-                toast.error("Wrong password or email! Please try again.");
+                toast.error("Sai email hoặc mật khẩu ! Vui lòng thử lại.");
             }
         } catch (error) {
             console.log(error);
@@ -37,10 +43,10 @@ export default function LoginForm() {
 
     return (
         <div>
-            <div className="text-left font-bold"><span className="text-yellow-300">Company</span>Name</div>
+            <div className="text-left font-bold"><span className="text-gray-800">Company</span>Name</div>
             <div className="py-10">
-                <h2 className="text-3xl font-bold text-yellow-300 mb-2">Sign In to your account</h2>
-                <div className="border-2 w-20 border-yellow-300 inline-block mb-2"></div>
+                <h2 className="text-3xl font-bold text-gray-800 mb-2">Đăng nhập</h2>
+                <div className="border-2 w-20 border-gray-800 inline-block mb-2"></div>
                 {/* <div className="flex justify-center my-2">
                     <Link href="" className="border-2 border-grey-200 rounded-full p-3 mx-1">
                         <FaFacebook />
@@ -61,11 +67,11 @@ export default function LoginForm() {
                         </div>
                         <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
                             <MdLockOutline className="m-2" />
-                            <input type="password" name="password" placeholder="Password" className="bg-gray-100 outline-none text-sm flex-1" />
+                            <input type="password" name="password" placeholder="Mật khẩu" className="bg-gray-100 outline-none text-sm flex-1" />
                         </div>
                         <div className="flex w-64 mb-5 justify-between">
-                            <label className="flex items-center text-xs"><input type="checkbox" name="remember" className="mr-1" />Remember</label>
-                            <Link href="#" className="text-xs">Forgot Password?</Link>
+                            <label className="flex items-center text-xs"><input type="checkbox" name="remember" className="mr-1" />Nhớ mật khẩu</label>
+                            <Link href="#" className="text-xs">Quên mật khẩu?</Link>
                         </div>
                         <LoginButton />
                     </form>
@@ -77,8 +83,8 @@ export default function LoginForm() {
         const { pending } = useFormStatus();
         return (
             <>
-                <button type="submit" disabled={pending} className="bg-yellow-300 p-3 border-2 border-yellow-300 rounded-full px-12 py-2 font-semibold hover:bg-white hover:text-yellow-300 text-white">
-                    {pending ? "Loading..." : "Sign In"}
+                <button type="submit" disabled={pending} className="bg-gray-800 p-3 border-2 border-gray-800 rounded-full px-12 py-2 font-semibold hover:bg-white hover:text-gray-800 text-white">
+                    {pending ? "Đang tải..." : "Đăng nhập"}
                 </button>
                 <ToastContainer />
             </>
