@@ -1,68 +1,33 @@
 import Head from "next/head";
 import Image from "next/image";
 import Layout from "./components/Layout";
+import LaptopList from "./components/laptopList";
+import Sidebar from "./components/sidebar";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import MouseList from "./components/mouseList";
 
 export default function Home() {
   return (
     <Layout>
-      <section className="flex flex-col items-center justify-center flex-1 px-20 text-center">
-        <Head>
-          <title>Trang Công Nghệ</title>
-          <meta name="description" content="Trang web công nghệ của bạn" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
-        <h1 className="text-6xl font-bold">
-          Chào mừng bạn đến với{' '}
-          <a className="text-blue-600" href="#">
-            Trang Công Nghệ!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Hãy khám phá những tin tức và bài viết mới nhất về công nghệ.
-        </p>
-
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="#"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600 bg-white"
-          >
-            <h2 className="text-2xl font-bold">Bài Viết 1 &rarr;</h2>
-            <p className="mt-4 text-xl">
-              Tìm hiểu về những xu hướng công nghệ mới nhất.
-            </p>
-          </a>
-
-          <a
-            href="#"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600 bg-white"
-          >
-            <h2 className="text-2xl font-bold">Bài Viết 2 &rarr;</h2>
-            <p className="mt-4 text-xl">
-              Đánh giá các sản phẩm công nghệ mới.
-            </p>
-          </a>
-
-          <a
-            href="#"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600 bg-white"
-          >
-            <h2 className="text-2xl font-bold">Bài Viết 3 &rarr;</h2>
-            <p className="mt-4 text-xl">
-              Mẹo và thủ thuật sử dụng các thiết bị công nghệ.
-            </p>
-          </a>
-
-          <a
-            href="#"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600 bg-white"
-          >
-            <h2 className="text-2xl font-bold">Bài Viết 4 &rarr;</h2>
-            <p className="mt-4 text-xl">
-              Phân tích chuyên sâu về các công nghệ tiên tiến.
-            </p>
-          </a>
+      <section className="flex flex-col items-center m-3">
+        <div className="flex md:w-8/12 w-full">
+          <div className="h-fit my-4 hidden xl:block">
+            <Sidebar />
+          </div>
+          <div className="border w-full mx-auto flex justify-center py-4">
+            <div className="">
+              <Image alt="image" src="https://file.hstatic.net/200000722513/file/banner_web_slider_800x400_laptop_lenovo-edit_95ee3ac03fa44ccf8e1adf2fa264f2a7.jpg" width={700} height={700}></Image>
+            </div>
+          </div>
+        </div>
+        <div className="md:w-8/12 w-full rounded-lg bg-white mb-5">
+          <LaptopList />
+        </div>
+        <div className="md:w-8/12 w-full rounded-lg bg-white mb-5">
+          <MouseList />
         </div>
       </section>
     </Layout>

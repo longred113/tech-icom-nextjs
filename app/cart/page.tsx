@@ -30,7 +30,7 @@ export default function Cart() {
 
     return (
         <Layout>
-            <div className="container mx-auto p-4">
+            <div className="container mx-auto p-4 h-full">
                 <Breadcrumb className="mb-6">
                     <BreadcrumbList>
                         <BreadcrumbItem>

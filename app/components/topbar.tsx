@@ -1,5 +1,8 @@
 'use client'
-import deleteCookie from "@/other/deleteCoookie";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import deleteCookie, { myModule } from "@/other/deleteCoookie";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { HiOutlineMenu } from "react-icons/hi";
@@ -25,8 +28,10 @@ export default function TopBar() {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
+
     useEffect(() => {
+        myModule.checkExistToken;
         if (typeof window !== "undefined") {
             const storage = localStorage.getItem("userData");
             if (storage) {
@@ -37,7 +42,7 @@ export default function TopBar() {
     }, []);
 
     return (
-        <nav className="bg-gray-800 p-4">
+        <nav className="bg-primary p-4">
             <div className="container mx-auto flex justify-between items-center">
                 <HiOutlineMenu
                     onClick={(e: any) => {
@@ -86,16 +91,36 @@ export default function TopBar() {
                         </>
 
                     ) : (<>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Avatar>
+                                    <AvatarImage className="cursor-pointer" src="https://github.com/shadcn.png" alt="@shadcn" />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56 bg-primary">
+                                {/* <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+                                <DropdownMenuSeparator /> */}
+                                <DropdownMenuItem className="text-white">
+                                    Profile
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="text-white">
+                                    Đăng xuất
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                        {/* <div className="flex w-full gap-1 items-center justify-center text-gray-300">
+                            <Avatar>
+                                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                        </div>
                         <Link href="#">
-                            <div className="flex w-full gap-1 items-center justify-center text-gray-300 hover:text-primary relative">
-                                <MdAccountCircle className="text-2xl" />
-                            </div>
-                            <p className="md:flex hidden justify-center items-center text-gray-300">{user.name}</p>
                         </Link>
-                        {/* <Link href="/" onClick={() => {
+                        <Link href="/" onClick={() => {
                             localStorage.removeItem('userData');
                             setUser(null);
-                            deleteCookie();
+                            myModule.deleteCookie;
                         }}>
                             <span className="text-gray-300 hover:text-white">Đăng xuất</span>
                         </Link> */}

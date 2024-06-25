@@ -6,4 +6,13 @@ async function deleteCookie() {
     cookies().delete("Auth-token");
 }
 
-export default deleteCookie;
+async function checkExistToken() {
+    const token = cookies().get('Auth-token')?.value;
+    if (!token) {
+        return false;
+    }
+    return true;
+}
+
+export const myModule = { deleteCookie, checkExistToken };
+export default myModule;
