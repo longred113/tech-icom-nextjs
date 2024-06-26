@@ -19,7 +19,14 @@ export default function Home() {
           </div>
           <div className="border w-full mx-auto flex justify-center py-4">
             <div className="">
-              <Image alt="image" src="https://file.hstatic.net/200000722513/file/banner_web_slider_800x400_laptop_lenovo-edit_95ee3ac03fa44ccf8e1adf2fa264f2a7.jpg" width={700} height={700}></Image>
+              <Image
+                alt="image"
+                src="https://file.hstatic.net/200000722513/file/banner_web_slider_800x400_laptop_lenovo-edit_95ee3ac03fa44ccf8e1adf2fa264f2a7.jpg"
+                width={500}
+                height={500}
+                quality={75}
+              >
+              </Image>
             </div>
           </div>
         </div>

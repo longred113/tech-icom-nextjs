@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Sidebar = () => {
     return (
-        <div className="flex flex-col w-[300px] min-w-[300px] border-r min-h-fit bg-white rounded-lg">
+        <div className="flex flex-col w-[300px] min-w-[300px] border-r min-h-fit bg-white rounded-lg text-sm">
             <div className="flex gap-2 p-2 hover:bg-primary hover:text-white">
                 <Laptop />
                 Laptop

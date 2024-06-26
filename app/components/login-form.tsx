@@ -60,16 +60,16 @@ export default function LoginForm() {
                 </div> */}
                 {/* <p className="text-gray-400 my-3">or use your email account</p> */}
                 <div className="flex flex-col items-center">
-                    <form action={login}>
-                        <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
+                    <form action={login} className="md:w-4/5">
+                        <div className="bg-gray-100 p-2 flex items-center mb-3 rounded-2xl">
                             <FaRegEnvelope className="m-2" />
                             <input type="email" name="email" placeholder="Email" className="bg-gray-100 outline-none text-sm flex-1" />
                         </div>
-                        <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
+                        <div className="bg-gray-100 p-2 flex items-center mb-3 rounded-2xl">
                             <MdLockOutline className="m-2" />
                             <input type="password" name="password" placeholder="Mật khẩu" className="bg-gray-100 outline-none text-sm flex-1" />
                         </div>
-                        <div className="flex w-64 mb-5 justify-between">
+                        <div className="flex mb-5 justify-between">
                             <label className="flex items-center text-xs"><input type="checkbox" name="remember" className="mr-1" />Nhớ mật khẩu</label>
                             <Link href="#" className="text-xs">Quên mật khẩu?</Link>
                         </div>

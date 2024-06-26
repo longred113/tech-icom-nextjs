@@ -26,6 +26,14 @@ export default function Cart() {
         getCart();
     }, []);
 
+    const updateQuantity = (index: number, newQuantity: number) => {
+        setProducts((prevProducts) => {
+            const updatedProducts = [...prevProducts];
+            updatedProducts[index].quantity = newQuantity;
+            return updatedProducts;
+        });
+    };
+
     console.log(products);
 
     return (
@@ -66,7 +74,24 @@ export default function Cart() {
                                                         <tr key={index}>
                                                             <td className="text-left">{item.product.name}</td>
                                                             <td className="text-right">{item.product.price.toLocaleString('vi-VN')}đ</td>
-                                                            <td className="text-right">{item.quantity}</td>
+                                                            <td className="text-right">
+                                                                <div className="flex items-center justify-end">
+                                                                    <button
+                                                                        className="bg-gray-200 px-2 py-1 rounded"
+                                                                        onClick={() => updateQuantity(index, item.quantity - 1)}
+                                                                        disabled={item.quantity === 1}
+                                                                    >
+                                                                        -
+                                                                    </button>
+                                                                    <span className="mx-2">{item.quantity}</span>
+                                                                    <button
+                                                                        className="bg-gray-200 px-2 py-1 rounded"
+                                                                        onClick={() => updateQuantity(index, item.quantity + 1)}
+                                                                    >
+                                                                        +
+                                                                    </button>
+                                                                </div>
+                                                            </td>
                                                             <td className="text-right">{(item.product.price * item.quantity).toLocaleString('vi-VN')}đ</td>
                                                         </tr>
                                                     )
@@ -85,7 +110,6 @@ export default function Cart() {
                                     <a href="/products" className="text-indigo-600 hover:underline">Tiếp tục mua sắm</a>
                                 </div>
                             </>
-
                         )
                     }
                 </div>

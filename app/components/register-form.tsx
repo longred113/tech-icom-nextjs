@@ -65,20 +65,20 @@ export default function RegisterForm() {
                 </div> */}
                 {/* <p className="text-gray-400 my-3">or register with your email account</p> */}
                 <div className="flex flex-col items-center">
-                    <form action={register}>
-                        <div className="bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-2xl">
+                    <form action={register} className="md:w-4/5">
+                        <div className="bg-gray-100 p-2 flex items-center mb-3 rounded-2xl">
                             <IoMdPerson className="m-2" />
                             <input type="name" required name="name" placeholder="Tên" className="bg-gray-100 outline-none text-sm flex-1" />
                         </div>
-                        <div className="bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-2xl">
+                        <div className="bg-gray-100 p-2 flex items-center mb-3 rounded-2xl">
                             <FaRegEnvelope className="m-2" />
                             <input type="email" required name="email" placeholder="Email" className="bg-gray-100 outline-none text-sm flex-1" />
                         </div>
-                        <div className="bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-2xl">
+                        <div className="bg-gray-100 p-2 flex items-center mb-3 rounded-2xl">
                             <MdLockOutline className="m-2" />
                             <input type="password" required name="password" placeholder="Mật khẩu" className="bg-gray-100 outline-none text-sm flex-1" />
                         </div>
-                        <div className="bg-gray-100 w-64 p-2 flex items-center mb-5 rounded-2xl">
+                        <div className="bg-gray-100 p-2 flex items-center mb-5 rounded-2xl">
                             <MdLockOutline className="m-2" />
                             <input type="password" required name="passwordConfirm" placeholder="Xác nhận mật khẩu" className="bg-gray-100 outline-none text-sm flex-1" />
                         </div>
