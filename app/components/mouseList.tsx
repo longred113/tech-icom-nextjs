@@ -15,12 +15,12 @@ type Mouse = {
 };
 
 const mouses: Mouse[] = [
-    { id: 1, name: 'Laptop GEARVN', price: '9.990.000₫', img: '/images/product1.png' },
-    { id: 2, name: 'Laptop Gaming', price: '14.490.000₫', img: '/images/product2.png' },
-    { id: 3, name: 'Laptop Gaming', price: '14.490.000₫', img: '/images/product3.png' },
-    { id: 4, name: 'Laptop Gaming', price: '14.490.000₫', img: '/images/product4.png' },
-    { id: 5, name: 'Laptop Gaming', price: '14.490.000₫', img: '/images/product5.png' },
-    { id: 6, name: 'Laptop Gaming', price: '14.490.000₫', img: '/images/product6.png' },
+    { id: 1, name: 'Laptop GEARVN', price: '9.990.000₫', img: 'https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png' },
+    { id: 2, name: 'Laptop Gaming', price: '14.490.000₫', img: 'https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png' },
+    { id: 3, name: 'Laptop Gaming', price: '14.490.000₫', img: 'https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png' },
+    { id: 4, name: 'Laptop Gaming', price: '14.490.000₫', img: 'https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png' },
+    { id: 5, name: 'Laptop Gaming', price: '14.490.000₫', img: 'https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png' },
+    { id: 6, name: 'Laptop Gaming', price: '14.490.000₫', img: 'https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png' },
 ];
 export default function MouseList() {
     const plugin = useRef(

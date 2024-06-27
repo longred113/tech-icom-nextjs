@@ -103,17 +103,17 @@ export default function TopBar() {
                     </Link>
                 </div> */}
                 <div className="space-x-5 flex">
-                    <Link href="/cart" className="text-gray-300 hover:text-white">
-                        <div className="flex w-full gap-1 items-center justify-center text-gray-300 relative hover:text-white">
+                    <Link href="/cart" className="text-gray-300">
+                        <div className="flex w-full gap-1 items-center justify-center text-white relative">
                             <IoMdCart className="text-2xl" />
 
-                            <div className="right-3 -top-1.5 absolute bg-product-price text-white px-1.5 text-sm rounded-full text-center">
+                            <div className="right-3 -top-1.5 absolute bg-red-600 text-white px-1.5 text-sm rounded-full text-center">
                                 {cart !== null ? (
                                     cart?.length
                                 ) : (null)}
                             </div>
                         </div>
-                        <p className="md:flex hidden justify-center items-center text-gray-300 hover:text-white">
+                        <p className="md:flex hidden justify-center items-center text-white">
                             Giỏ hàng
                         </p>
                     </Link>
