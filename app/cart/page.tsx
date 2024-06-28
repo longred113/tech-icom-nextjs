@@ -10,7 +10,8 @@ import { Button } from "@/components/ui/button";
 import { FaRegTrashAlt } from "react-icons/fa";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import CartInfo from "../components/cart-info";
+import CartInfo from "../components/cartstep";
+import CartStep from "../components/cartstep";
 
 export default function Cart() {
     const [products, setProducts] = useState<any[]>([]);
@@ -86,48 +87,7 @@ export default function Cart() {
                     </BreadcrumbList>
                 </Breadcrumb>
                 <div className="bg-white shadow-md rounded p-4 md:w-1/2 mx-auto">
-                    <h2 className="text-2xl font-semibold mb-4">Giỏ hàng của bạn</h2>
-                    <div className="bg-slate-400 flex justify-between p-5 rounded-lg">
-                        <div>
-                            <div className="rounded-full border border-primary p-2 w-fit mx-auto bg-primary text-white">
-                                <IoBagCheck className="text-2xl" />
-                            </div>
-                            <div className="text-center text-primary">
-                                <span>Giỏ hàng</span>
-                            </div>
-                        </div>
-                        <div className="text-gray-500">
-                            <div className={`rounded-full border border-gray-500 p-2 w-fit mx-auto ${hash === "#cart-info" ? ("bg-primary text-white") : ("text-gray-500")}`}>
-                                <FaIdCard className={`text-2xl`} />
-                            </div>
-                            <div className={`text-center  ${hash === "#cart-info" && ("text-primary")}`}>
-                                <span>Thông tin đặt hàng</span>
-                            </div>
-                        </div>
-                        <div className="text-gray-500">
-                            <div className={`rounded-full border border-gray-500 p-2 w-fit mx-auto ${hash === "#cart-payment" ? ("bg-primary text-white") : ("text-gray-500")}`}>
-                                <FaCreditCard className="text-2xl" />
-                            </div>
-                            <div className={`text-center  ${hash === "#cart-payment" && ("text-primary")}`}>
-                                <span>Thanh toán</span>
-                            </div>
-                        </div>
-                        <div className="text-gray-500">
-                            <div className={`rounded-full border border-gray-500 p-2 w-fit mx-auto ${hash === "#cart-finish" ? ("bg-primary text-white") : ("text-gray-500")}`}>
-                                <IoShieldCheckmarkSharp className="text-2xl" />
-                            </div>
-                            <div className="text-center">
-                                <span>Hoàn tất</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        {
-                            hash === "#cart-info" && products.length > 0 && (
-                                <CartInfo />
-                            )
-                        }
-                    </div>
+                    <CartStep />
                     <div>
                         {
                             hash === null && products?.length > 0 ? (
@@ -144,8 +104,7 @@ export default function Cart() {
                                                             height={90} // Specify the height of the image
                                                             quality={90} // Specify the image quality
                                                             priority
-                                                        >
-                                                        </Image>
+                                                        />
                                                         <div className="text-sm flex items-center">
                                                             {/* <Button>
                                                             <Trash2 />
@@ -156,7 +115,7 @@ export default function Cart() {
                                                             >Xoá</span>
                                                         </div>
                                                     </div>
-                                                    <div className="md:flex md:flex-row">
+                                                    <div className="md:flex md:flex-row w-full">
                                                         <div className="w-full mx-3">
                                                             <h3>{item.productName}</h3>
                                                         </div>
@@ -189,7 +148,7 @@ export default function Cart() {
                                         <span className="text-red-600 text-xl font-bold">{totalPrice.toLocaleString('vi-VN')}đ</span>
                                     </div>
                                     <Button asChild onClick={getHash} className="w-full text-xl uppercase">
-                                        <Link href="/cart/#cart-info">
+                                        <Link href="/cart/pay-info">
                                             Đặt hàng ngay
                                         </Link>
                                     </Button>
