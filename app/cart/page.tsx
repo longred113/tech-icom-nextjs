@@ -36,7 +36,6 @@ export default function Cart() {
                 }
             });
             setTotalPrice(total);
-            console.log(total);
         } catch (error) {
             console.log(error);
         }
@@ -68,7 +67,6 @@ export default function Cart() {
             window.removeEventListener('hashchange', handleHashChange);
         };
     }
-    console.log(hash);
 
     return (
         <Layout>

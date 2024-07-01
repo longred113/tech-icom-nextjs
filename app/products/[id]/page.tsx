@@ -76,7 +76,6 @@ function ProductDetail() {
     if (!product) {
         return <div>Đang tải...</div>;
     }
-    console.log(product)
     return (
         <Layout>
             <div className="container mx-auto p-4">

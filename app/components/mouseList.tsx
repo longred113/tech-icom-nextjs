@@ -42,7 +42,7 @@ export default function MouseList() {
             >
                 <CarouselContent className="relative">
                     {mouses.map(product => (
-                        <CarouselItem key={product.id} className=" basis-1/3 lg:basis-1/5" >
+                        <CarouselItem key={product.id} className=" basis-1/2 lg:basis-1/5" >
                             <div className="max-w-sm">
                                 <Card>
                                     <CardContent className="flex flex-col aspect-square items-center justify-center p-6">
@@ -63,11 +63,11 @@ export default function MouseList() {
                         </CarouselItem>
                     ))}
                 </CarouselContent >
-                <CarouselPrevious />
-                <CarouselNext />
+                <CarouselPrevious className="md:block hidden" />
+                <CarouselNext className="md:block hidden" />
             </Carousel >
             <div className="text-center my-4">
-                <Button className="bg-primary hover:bg-blue-500">Xem thêm sản phẩm</Button>
+                <Button className="bg-primary text-white">Xem thêm sản phẩm</Button>
             </div>
         </>
     );

@@ -18,7 +18,6 @@ export async function GET(req: NextRequest) {
     }
 
     if (param === "PRODUCTDETAIL") {
-        console.log(name);
         const response = await fetch(`${BASE_URL}/api/product/${name}`, {
             method: 'GET',
             cache: 'no-store',
@@ -27,7 +26,6 @@ export async function GET(req: NextRequest) {
             },
         });
         const data = await response.json();
-        console.log(data);
         return NextResponse.json({ data } as any);
     }
 }

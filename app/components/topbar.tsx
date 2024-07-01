@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { HiOutlineMenu } from "react-icons/hi";
 import { IoMdCart } from "react-icons/io";
 import { MdAccountCircle, MdSearch } from "react-icons/md";
+import SidebarMobile from "./sidebar-mobile";
 interface User {
     name: string;
     email: string;
@@ -67,17 +68,21 @@ export default function TopBar() {
 
     return (
         <nav className={`bg-primary p-4 ${isSticky ? 'fixed top-0 left-0 w-full z-50' : ''}`}>
-            <div className="mx-auto flex justify-between items-center text-sm w-8/12">
-                <HiOutlineMenu
+            <div className="mx-auto flex justify-between items-center text-sm md:w-8/12">
+                {/* <HiOutlineMenu
                     onClick={(e: any) => {
                         // setVisible(!visible);
                     }}
                     className="text-2xl md:hidden cursor-pointer hover:text-[#3BB243]"
-                />
-                <div className="text-white text-lg font-bold">
+                /> */}
+                <div>
+                    {/* <HiOutlineMenu /> */}
+                    <SidebarMobile user={user} />
+                </div>
+                <div className="text-white text-lg font-bold md:ml-0 ml-10">
                     <Link href="/">Tech Icom</Link>
                 </div>
-                <div className="bg-white m-2 md:flex flex-grow rounded-md">
+                <div className="bg-white m-2 flex flex-grow rounded-md">
                     <input
                         type="text"
                         value={searchQuery}
@@ -88,26 +93,12 @@ export default function TopBar() {
                     />
                     <MdSearch className="m-2 bg-white text-xl text-gray-500" />
                 </div>
-                {/* <div className="space-x-5 hidden md:block">
-                    <Link href="/about">
-                        <span className="text-gray-300 hover:text-white">Giới Thiệu</span>
-                    </Link>
-                    <Link href="/blog" legacyBehavior>
-                        <span className="text-gray-300 hover:text-white">Bài Viết</span>
-                    </Link>
-                    <Link href="/contact" legacyBehavior>
-                        <span className="text-gray-300 hover:text-white">Liên Hệ</span>
-                    </Link>
-                    <Link href="/products">
-                        <span className="text-gray-300 hover:text-white">Sản phẩm</span>
-                    </Link>
-                </div> */}
                 <div className="space-x-5 flex">
                     <Link href="/cart" className="text-gray-300">
                         <div className="flex w-full gap-1 items-center justify-center text-white relative">
                             <IoMdCart className="text-2xl" />
 
-                            <div className="right-3 -top-1.5 absolute bg-red-600 text-white px-1.5 text-sm rounded-full text-center">
+                            <div className="md:right-3 -right-1 -top-1.5 absolute bg-red-600 text-white px-1.5 text-sm rounded-full text-center">
                                 {cart !== null ? (
                                     cart?.length
                                 ) : (null)}
@@ -120,15 +111,13 @@ export default function TopBar() {
                     {user?.name === undefined ? (
                         <>
                             <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <div className="text-gray-300 hover:text-white cursor-pointer">
+                                <DropdownMenuTrigger asChild className="md:block hidden">
+                                    <div className="text-white hover:text-white cursor-pointer">
                                         <MdAccountCircle className="text-2xl mx-auto" />
                                         <p className="">Đăng nhập</p>
                                     </div>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-56 bg-primary" align="center">
-                                    {/* <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-                                <DropdownMenuSeparator /> */}
                                     <Link href="/login">
                                         <DropdownMenuItem className="text-white cursor-pointer">
                                             <span>Đăng nhập</span>
@@ -145,15 +134,13 @@ export default function TopBar() {
 
                     ) : (<>
                         <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
+                            <DropdownMenuTrigger asChild className="md:block hidden">
                                 <Avatar>
                                     <AvatarImage className="cursor-pointer" src="https://github.com/shadcn.png" alt="@shadcn" />
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56 bg-primary">
-                                {/* <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-                                <DropdownMenuSeparator /> */}
                                 <DropdownMenuItem className="text-white">
                                     Profile
                                 </DropdownMenuItem>
