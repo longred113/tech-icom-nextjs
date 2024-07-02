@@ -24,7 +24,7 @@ export default function Product() {
     useEffect(() => { product() }, []);
     return (
         <Layout>
-            <div className="container mx-auto p-4">
+            <div className="container mx-auto p-4 md:w-8/12">
                 <Breadcrumb className="mb-6">
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -39,9 +39,9 @@ export default function Product() {
                     </BreadcrumbList>
                 </Breadcrumb>
                 {/* <h1 className="text-4xl font-bold mb-6">Trang Sản Phẩm</h1> */}
-                <div className="flex flex-wrap -mx-3 h-fit">
+                <div className="flex flex-wrap -mx-3">
                     {products.map((product: any) => (
-                        <div key={product.id} className="w-full md:w-1/2 lg:w-1/5 px-3 mb-6">
+                        <div key={product.id} className="w-1/2 md:w-1/3 lg:w-1/5 px-1 mb-6">
                             <ProductCard
                                 id={product.id}
                                 name={product.name}

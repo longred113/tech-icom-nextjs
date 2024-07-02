@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import CartInfo from "../components/cartstep";
 import CartStep from "../components/cartstep";
+import { IMAGE_NULL } from "@/other/axios";
 
 export default function Cart() {
     const [products, setProducts] = useState<any[]>([]);
@@ -67,10 +68,11 @@ export default function Cart() {
             window.removeEventListener('hashchange', handleHashChange);
         };
     }
+    console.log(products);
 
     return (
         <Layout>
-            <div className="container mx-auto p-4 md:h-full h-screen">
+            <div className="container mx-auto p-4 h-full">
                 <Breadcrumb className="mb-6">
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -95,11 +97,11 @@ export default function Cart() {
                                             return (
                                                 <div key={index} className="flex p-4">
                                                     <div className="flex-shrink-0">
-                                                        <Image src={"https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png"}
+                                                        <Image src={item.image ? item.image : IMAGE_NULL}
                                                             alt={item.productName}
-                                                            className="md:w-2/3 w-1/2 h-auto mb-2 border-2"
-                                                            width={90} // Specify the width of the image
-                                                            height={90} // Specify the height of the image
+                                                            className="h-auto mb-2 border-2"
+                                                            width={140} // Specify the width of the image
+                                                            height={140} // Specify the height of the image
                                                             quality={90} // Specify the image quality
                                                             priority
                                                         />

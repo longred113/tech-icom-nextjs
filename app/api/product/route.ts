@@ -6,11 +6,16 @@ export async function GET(req: NextRequest) {
     const name = url.searchParams.get("name");
     const param = url.searchParams.get("param");
     if (param === "GETALL") {
-        const response = await fetch(`${BASE_URL}/api/product/get-all`, {
-            method: 'GET',
-        });
-        const data = await response.json();
-        return NextResponse.json({ data } as any);
+        try {
+            const response = await fetch(`${BASE_URL}/api/product/get-all`, {
+                method: 'GET',
+                cache: 'no-store'
+            });
+            const data = await response.json();
+            return NextResponse.json({ data } as any);
+        } catch (error) {
+            console.log(error);
+        }
     }
     if (param === "GETDETAIL") {
         const productId = 1;
@@ -18,14 +23,35 @@ export async function GET(req: NextRequest) {
     }
 
     if (param === "PRODUCTDETAIL") {
-        const response = await fetch(`${BASE_URL}/api/product/${name}`, {
-            method: 'GET',
-            cache: 'no-store',
-            headers: {
-                "Content-type": "application/json",
-            },
-        });
-        const data = await response.json();
-        return NextResponse.json({ data } as any);
+        try {
+            const response = await fetch(`${BASE_URL}/api/product/${name}`, {
+                method: 'GET',
+                cache: 'no-store',
+                headers: {
+                    "Content-type": "application/json",
+                },
+            });
+            const data = await response.json();
+            return NextResponse.json({ data } as any);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    if (param === "GETPRODUCTBYCATEGORY") {
+        try {
+            if (name === "mouse") {
+                const response = await fetch(`${BASE_URL}/api/product/get-by-category/5`, {
+                    method: 'GET',
+                    cache: 'no-store',
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                });
+                const data = await response.json();
+                return NextResponse.json({ data } as any);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

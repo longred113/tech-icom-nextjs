@@ -66,8 +66,10 @@ export default function LaptopList() {
                             </CarouselItem>
                         ))}
                     </CarouselContent >
-                    <CarouselPrevious className="md:block hidden" />
-                    <CarouselNext className="md:block hidden" />
+                    <div className="md:block hidden">
+                        <CarouselPrevious className="ml-16" />
+                        <CarouselNext className="mr-16" />
+                    </div>
                 </Carousel >
             </div>
             <div className="text-center my-4">

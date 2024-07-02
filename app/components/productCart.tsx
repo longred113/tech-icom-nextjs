@@ -1,4 +1,5 @@
 
+import { IMAGE_NULL } from '@/other/axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -22,24 +23,36 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, description, price,
         currency: 'VND',
     });
     const router = useRouter();
+    const removeAccents = (str: string): string => {
+        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
     const convertToUrlFriendly = (name: string): string => {
-        return name.trim()
+        return removeAccents(name.trim())
             .replace(/ /g, '-') // Thay thế tất cả các khoảng trắng bằng dấu gạch ngang
             .replace(/[^a-zA-Z0-9-]/g, '') // Loại bỏ các ký tự đặc biệt
             .toLowerCase(); // Chuyển tất cả các ký tự thành chữ thường
     };
+
     const handleClick = () => {
         router.push(`/products/${convertToUrlFriendly(name)}`);
     };
     return (
-        <div onClick={handleClick} className="max-w-sm rounded overflow-hidden shadow-lg border bg-white">
-            {firstImageUrl && <Image className="w-full pt-5 px-6" src={firstImageUrl} alt={name} width={200} height={200} />}
-            <div className="px-6 pt-4">
-                <div className="font-bold text-base mb-2">{name}</div>
+        <div onClick={handleClick} className="max-w-sm rounded h-full overflow-hidden shadow-lg border bg-white">
+            <Image className="w-full h-40 object-contain p-4"
+                src={firstImageUrl ? firstImageUrl : IMAGE_NULL}
+                alt={name}
+                width={500}
+                height={500}
+                quality={90}
+                priority
+            />
+            <div className="px-6 py-4">
+                <h3 className="font-semibold text-xs mb-2">{name}</h3>
                 <ul className="text-gray-700 text-sm">
-                    {Object.keys(description).map((item, index) => {
+                    {Object.entries(description).map(([key, value]) => {
                         let icon;
-                        switch (item) {
+                        switch (key) {
                             case 'CPU':
                                 icon = <HiCpuChip />;
                                 break;
@@ -55,19 +68,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, description, price,
                             case 'display':
                                 icon = <MdScreenshotMonitor />;
                                 break;
-                            default:
-                                icon = null;
                         }
                         return (
-                            <div key={index} className='flex items-center'>
-                                {icon} {": " + description[item]}
-                            </div>
+                            <li key={key} className='flex items-center text-xs font-medium'>
+                                {icon && <span className="mr-1">{icon}</span>}
+                                {`: ${value}`}
+                            </li>
                         );
                     })}
                 </ul>
             </div>
-            <div className="px-6 pt-4 pb-2">
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            <div className="px-6 py-4">
+                <span className="inline-block py-1 text-sm font-semibold text-red-500">
                     {formattedPrice}
                 </span>
             </div>

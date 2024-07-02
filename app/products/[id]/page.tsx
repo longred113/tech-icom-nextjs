@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Slash } from "lucide-react";
 import Image from "next/image";
+import { IMAGE_NULL } from "@/other/axios";
 
 function ProductDetail() {
     const param = useParams();
@@ -101,15 +102,15 @@ function ProductDetail() {
                 {/* <h1 className="text-4xl font-bold mb-6">{product.data.name}</h1> */}
                 <div className="flex flex-wrap mt-10">
                     <div className="w-full lg:w-2/6 px-4 border bg-white">
-                        {product.data.image && product.data.image.length > 0 && (
-                            <Image className="w-full p-5 rounded" src={product.data.image[0]} alt={product.data.name} width={600} height={600} />
+                        {(
+                            <Image className="w-full p-5 rounded" src={product.data.image?.[0] ? product.data.image[0] : IMAGE_NULL} alt={product.data.name} width={600} height={600} />
                         )}
                     </div>
                     <div className="w-full lg:w-4/6 px-4 flex flex-col justify-start items-start lg:items-start border bg-white">
                         <div className="text-xl font-medium mb-4">
                             {product.data.name}
                         </div>
-                        <div className="text-xl font-bold mb-4 text-product-price">
+                        <div className="text-xl font-bold mb-4 text-red-500">
                             {formattedPrice}
                         </div>
                         {
