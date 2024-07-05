@@ -44,7 +44,7 @@ const SidebarMobile = ({ user }: any) => {
             animate={isOpen ? "open" : "closed"}
             custom={height}
             ref={containerRef}
-            className={`fixed inset-0 z-50 w-full md:hidden ${isOpen ? "" : "pointer-events-none"}`}
+            className={`fixed inset-0 z-50 w-full xl:hidden ${isOpen ? "" : "pointer-events-none"}`}
         >
             <motion.div
                 className="absolute inset-0 right-0 w-full bg-white"

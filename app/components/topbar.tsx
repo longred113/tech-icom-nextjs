@@ -1,7 +1,6 @@
 'use client'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import deleteCookie from "@/other/deleteCoookie";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -9,6 +8,7 @@ import { HiOutlineMenu } from "react-icons/hi";
 import { IoMdCart } from "react-icons/io";
 import { MdAccountCircle, MdSearch } from "react-icons/md";
 import SidebarMobile from "./sidebar-mobile";
+import deleteCookie from "@/other/deleteCoookie";
 interface User {
     name: string;
     email: string;
@@ -41,6 +41,14 @@ export default function TopBar() {
             setIsSticky(false);
         }
     };
+
+    useEffect(() => {
+        const token = document.cookie.split('; ').find(row => row.startsWith('Auth-token='));
+
+        if (!token) {
+            localStorage.removeItem("userData");
+        }
+    }, []);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -98,7 +106,7 @@ export default function TopBar() {
                         <div className="flex w-full gap-1 items-center justify-center text-white relative">
                             <IoMdCart className="text-2xl" />
 
-                            <div className="md:right-3 -right-1 -top-1.5 absolute bg-red-600 text-white px-1.5 text-sm rounded-full text-center">
+                            <div className="md:right-3 -right-1 -top-2.5 absolute bg-red-600 text-white px-1.5 text-sm rounded-full text-center">
                                 {cart !== null ? (
                                     cart?.length
                                 ) : (null)}

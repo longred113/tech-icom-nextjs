@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
+import { IMAGE_NULL } from "@/other/axios";
 
 type Mouse = {
     id: number;
@@ -25,7 +26,7 @@ const mouses: Mouse[] = [
 export default function MouseList() {
     const [mouseList, setMouseList] = useState<any>(null);
     const plugin = useRef(
-        Autoplay({ delay: 2000, stopOnInteraction: true })
+        Autoplay({ delay: 3000, stopOnInteraction: true })
     );
     const getMouseList = async () => {
         const res = await fetch("/api/product?param=GETPRODUCTBYCATEGORY&name=mouse", {
@@ -39,7 +40,6 @@ export default function MouseList() {
     useEffect(() => {
         getMouseList();
     }, []);
-    console.log(mouseList);
     return (
         <>
             <div className="bg-primary text-2xl shadow-md p-5 flex rounded-t-lg">
@@ -55,27 +55,42 @@ export default function MouseList() {
                 onMouseLeave={plugin.current.reset}
             >
                 <CarouselContent className="">
-                    {mouseList?.map((product: any) => (
-                        <CarouselItem key={product.id} className=" basis-1/2 lg:basis-1/5" >
-                            <div className="max-w-sm">
-                                <Card>
-                                    <CardContent className="flex flex-col aspect-square items-center justify-center p-6">
-                                        <Image
-                                            src={product.image?.[0]}
-                                            alt={product.name}
-                                            className="w-full mb-2 object-contain"
-                                            width={500} // Specify the width of the image
-                                            height={500} // Specify the height of the image
-                                            quality={90} // Specify the image quality
-                                            priority // Set the image as a priority
-                                        />
-                                        <h3 className="font-medium text-sm">{product.name}</h3>
-                                        <p className="text-red-500">{product.price}₫</p>
-                                    </CardContent>
-                                </Card>
-                            </div>
-                        </CarouselItem>
-                    ))}
+                    {mouseList?.map((product: any) => {
+                        let imageUrl = ''
+                        if (product.image?.[0] === undefined) {
+                            imageUrl = IMAGE_NULL;
+                        }
+                        else {
+                            imageUrl = product.image?.[0];
+                        }
+                        return (
+                            <CarouselItem key={product.id} className=" basis-1/2 lg:basis-1/5" >
+                                <div className="max-w-sm">
+                                    <Card>
+                                        <CardContent className="flex flex-col items-center justify-between h-72 p-4">
+                                            <div className="w-full aspect-w-1 aspect-h-1">
+                                                <Image
+                                                    src={imageUrl}
+                                                    alt={product.name}
+                                                    className="object-contain"
+                                                    width={500}
+                                                    height={500}
+                                                    quality={90}
+                                                    priority
+                                                />
+                                            </div>
+                                            <h3 className="font-medium text-sm">{product.name}</h3>
+                                            <p className="text-red-500">{product.price.toLocaleString('vi-VN', {
+                                                style: 'currency',
+                                                currency: 'VND',
+                                            })}</p>
+                                        </CardContent>
+                                    </Card>
+                                </div>
+                            </CarouselItem>
+                        );
+                    }
+                    )};
                 </CarouselContent >
                 <div className="md:block hidden">
                     <CarouselPrevious className="ml-16" />

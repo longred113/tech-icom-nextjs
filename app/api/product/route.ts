@@ -39,12 +39,21 @@ export async function GET(req: NextRequest) {
     }
     if (param === "GETPRODUCTBYCATEGORY") {
         try {
-            if (name === "mouse") {
-                const response = await fetch(`${BASE_URL}/api/product/get-by-category/5`, {
+            const categoryId = name ? {
+                laptop: 1,
+                PC: 2,
+                mouse: 5,
+                screen: 6,
+                keyboard: 7,
+                headphone: 8,
+            }[name] : null;
+
+            if (categoryId) {
+                const response = await fetch(`${BASE_URL}/api/product/get-by-category/${categoryId}`, {
                     method: 'GET',
                     cache: 'no-store',
                     headers: {
-                        "Content-type": "application/json",
+                        'Content-type': 'application/json',
                     },
                 });
                 const data = await response.json();
