@@ -30,7 +30,7 @@ const Sidebar = ({ onHover, onLeave }: any) => {
     };
 
     return (
-        <div className="flex flex-col w-72 min-w-72 bg-white rounded-lg text-sm relative">
+        <div className="flex flex-col w-72 min-w-72 bg-white rounded-lg text-sm flex-shrink-0">
             {items.map((item) => (
                 <div key={item.value}>
                     {/* Main item */}

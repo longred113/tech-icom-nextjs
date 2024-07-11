@@ -54,8 +54,8 @@ export default function Home() {
   return (
     <Layout>
       <section className="flex flex-col items-center m-3">
-        <div className="flex md:w-8/12 w-full relative gap-4">
-          <div className="h-fit my-4 hidden xl:block pr-3">
+        <div className="flex xl:w-8/12 w-full relative gap-4">
+          <div className="h-fit my-4 hidden lg:block pr-3 flex-shrink-0">
             <Sidebar onHover={handleHover} onLeave={handleLeave} />
           </div>
           <div className="w-full mx-auto flex justify-center py-4 relative">
@@ -73,10 +73,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="md:w-8/12 w-full rounded-lg bg-white mb-5">
+        <div className="xl:w-8/12 w-full rounded-lg bg-white mb-5">
           <LaptopList />
         </div>
-        <div className="md:w-8/12 w-full rounded-lg bg-white mb-5">
+        <div className="xl:w-8/12 w-full rounded-lg bg-white mb-5">
           <MouseList />
         </div>
       </section>

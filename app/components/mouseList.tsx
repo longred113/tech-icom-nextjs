@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { IMAGE_NULL } from "@/other/axios";
+import SkeletonCart from "./skeletonCart";
 
 type Mouse = {
     id: number;
@@ -15,16 +16,15 @@ type Mouse = {
     img: string;
 };
 
-const mouses: Mouse[] = [
-    { id: 1, name: 'Laptop GEARVN', price: '9.990.000₫', img: 'https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png' },
-    { id: 2, name: 'Laptop Gaming', price: '14.490.000₫', img: 'https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png' },
-    { id: 3, name: 'Laptop Gaming', price: '14.490.000₫', img: 'https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png' },
-    { id: 4, name: 'Laptop Gaming', price: '14.490.000₫', img: 'https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png' },
-    { id: 5, name: 'Laptop Gaming', price: '14.490.000₫', img: 'https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png' },
-    { id: 6, name: 'Laptop Gaming', price: '14.490.000₫', img: 'https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png' },
-];
 export default function MouseList() {
     const [mouseList, setMouseList] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        // Simulate data fetching
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 400); // Adjust the timeout as needed
+    }, []);
     const plugin = useRef(
         Autoplay({ delay: 3000, stopOnInteraction: true })
     );
@@ -45,7 +45,7 @@ export default function MouseList() {
             <div className="bg-primary text-2xl shadow-md p-5 flex rounded-t-lg">
                 <h2 className="text-white">Chuột mới nhất</h2>
                 <div className="ml-auto">
-                    <Link href='/mouses' className="text-lg font-normal text-white hover:text-blue-500">Xem tất cả</Link>
+                    <Link href='/collections/mouse' className="text-lg font-normal text-white hover:text-blue-500">Xem tất cả</Link>
                 </div>
             </div>
             <Carousel
@@ -55,7 +55,13 @@ export default function MouseList() {
                 onMouseLeave={plugin.current.reset}
             >
                 <CarouselContent className="">
-                    {mouseList?.map((product: any) => {
+                    {isLoading ? (
+                        Array.from({ length: 5 }).map((_, index) => (
+                            <CarouselItem key={index} className="basis-1/3 lg:basis-1/5">
+                                <SkeletonCart />
+                            </CarouselItem>
+                        ))
+                    ) : (mouseList?.map((product: any) => {
                         let imageUrl = ''
                         if (product.image?.[0] === undefined) {
                             imageUrl = IMAGE_NULL;
@@ -64,7 +70,7 @@ export default function MouseList() {
                             imageUrl = product.image?.[0];
                         }
                         return (
-                            <CarouselItem key={product.id} className=" basis-1/2 lg:basis-1/5" >
+                            <CarouselItem key={product.id} className=" basis-1/3 lg:basis-1/5" >
                                 <div className="max-w-sm">
                                     <Card>
                                         <CardContent className="flex flex-col items-center justify-between h-72 p-4">
@@ -90,7 +96,7 @@ export default function MouseList() {
                             </CarouselItem>
                         );
                     }
-                    )};
+                    ))};
                 </CarouselContent >
                 <div className="md:block hidden">
                     <CarouselPrevious className="ml-16" />
@@ -98,7 +104,9 @@ export default function MouseList() {
                 </div>
             </Carousel >
             <div className="text-center my-4">
-                <Button className="bg-primary text-white">Xem thêm sản phẩm</Button>
+                <Link href="/collections/mouse">
+                    <Button className="bg-primary text-white">Xem thêm sản phẩm</Button>
+                </Link>
             </div>
         </>
     );

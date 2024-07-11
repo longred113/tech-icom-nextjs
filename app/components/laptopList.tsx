@@ -8,13 +8,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { IMAGE_NULL } from "@/other/axios";
 import { Skeleton } from "@/components/ui/skeleton";
-
-type Product = {
-    id: number;
-    name: string;
-    price: string;
-    img: string;
-};
+import SkeletonCart from "./skeletonCart";
 
 export default function LaptopList() {
     const [isLoading, setIsLoading] = useState(true);
@@ -47,7 +41,7 @@ export default function LaptopList() {
             <div className="bg-primary text-2xl shadow-md p-5 flex rounded-t-lg">
                 <h2 className="text-white">Laptop mới nhất</h2>
                 <div className="ml-auto">
-                    <Link href='/products' className="text-lg font-normal text-white hover:text-blue-500">Xem tất cả</Link>
+                    <Link href='/collections/laptop' className="text-lg font-normal text-white hover:text-blue-500">Xem tất cả</Link>
                 </div>
             </div>
             <div className="relative">
@@ -59,19 +53,16 @@ export default function LaptopList() {
                 >
                     <CarouselContent>
                         {isLoading ? (
-                            <div className="flex flex-col space-y-3 justify-center">
-                                <Skeleton className="h-[125px] w-[250px] rounded-xl bg-black" />
-                                <div className="space-y-2">
-                                    <Skeleton className="h-4 w-[250px] bg-black" />
-                                    <Skeleton className="h-4 w-[200px] bg-black" />
-                                </div>
-                            </div>
-
+                            Array.from({ length: 5 }).map((_, index) => (
+                                <CarouselItem key={index} className="basis-1/3 lg:basis-1/5">
+                                    <SkeletonCart />
+                                </CarouselItem>
+                            ))
                         ) : (
                             laptopList?.map((product: any) => {
                                 let imageUrl = product.image?.[0] || IMAGE_NULL;
                                 return (
-                                    <CarouselItem key={product.id} className="basis-1/2 lg:basis-1/5">
+                                    <CarouselItem key={product.id} className="basis-1/3 lg:basis-1/5">
                                         <div className="max-w-sm">
                                             <Card>
                                                 <CardContent className="flex flex-col items-center justify-between h-72 p-4">
@@ -103,9 +94,11 @@ export default function LaptopList() {
                         <CarouselPrevious className="ml-16" />
                         <CarouselNext className="mr-16" />
                     </div>
-                </Carousel>           </div>
+                </Carousel>           </div >
             <div className="text-center my-4">
-                <Button className="bg-primary text-white">Xem thêm sản phẩm</Button>
+                <Link href="/collections/laptop">
+                    <Button className="bg-primary text-white">Xem thêm sản phẩm</Button>
+                </Link>
             </div>
         </>
     );

@@ -76,21 +76,14 @@ export default function TopBar() {
 
     return (
         <nav className={`bg-primary p-4 ${isSticky ? 'fixed top-0 left-0 w-full z-50' : ''}`}>
-            <div className="mx-auto flex justify-between items-center text-sm md:w-8/12">
-                {/* <HiOutlineMenu
-                    onClick={(e: any) => {
-                        // setVisible(!visible);
-                    }}
-                    className="text-2xl md:hidden cursor-pointer hover:text-[#3BB243]"
-                /> */}
+            <div className="mx-auto flex justify-between items-center text-sm xl:w-8/12">
                 <div>
-                    {/* <HiOutlineMenu /> */}
                     <SidebarMobile user={user} />
                 </div>
                 <div className="text-white text-lg font-bold md:ml-0 ml-10">
                     <Link href="/">Tech Icom</Link>
                 </div>
-                <div className="bg-white m-2 flex flex-grow rounded-md">
+                <div className="bg-white m-2 flex lg:flex-grow w-1/2 rounded-md">
                     <input
                         type="text"
                         value={searchQuery}
