@@ -49,6 +49,7 @@ export default function CartInfo() {
         // ✅ This will be type-safe and validated.
         console.log(values)
     }
+    // console.log(username, phone, address)
 
     return (
         <Layout>

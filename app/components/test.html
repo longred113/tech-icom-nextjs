@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main-container {
+            width: 100%;
+            /* padding-left: auto;
+            padding-right: auto; */
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+        }
+
+        .grid-category-container {
+            width: 100%;
+            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+            gap: .75rem;
+        }
+
+        .grid-category-container>div {
+            text-align: center;
+        }
+
+        /* .image {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        } */
+
+        .grid-category-container a div {
+            width: 100%;
+            height: 2.75rem;
+            object-fit: contain;
+        }
+
+
+        .text {
+            text-align: center;
+        }
+
+        @media (min-width: 1024px) {
+            .grid-category-container {
+                display: grid;
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+            }
+
+            .main-container {
+                width: 83.333333%;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .main-container {
+                width: 91.666667%;
+            }
+
+            .grid-category-container>div {
+                padding-left: 1.75rem;
+                padding-right: 1.75rem;
+            }
+        }
+
+        .custom-gateway-label {
+            font-size: 1em;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <span class="custom-gateway-label">10000</span>'
+    <!-- <div class="main-container">
+        <div class="grid-category-container">
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/hong-sam-nhan-sam/">
+                    <div>
+                        <img class="image" src="https://cloude.muatuhanquoc.com/2024/01/22/image-21.png"
+                            alt="hồng sâm/nhân sâm">
+                    </div>
+                    <p class="text">Hồng sâm/Nhân sâm</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/vitamin-khoang-chat/">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-467.png&w=256&q=75"
+                            alt="sức khoẻ">
+                    </div>
+                    <p class="text">Sức khoẻ</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/my-pham/">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-468.png&w=256&q=75"
+                            alt="mỹ phẩm">
+                    </div>
+                    <p class="text">Mỹ phẩm</p>
+                </a>
+            </div>
+            <div>
+                <a href="">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-469.png&w=256&q=75"
+                            alt="thời trang">
+                    </div>
+                    <p class="text">Thời trang</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/noi-com-dien-cuckoo/">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-470.png&w=256&q=75"
+                            alt="điện tử-gia dụng">
+                    </div>
+                    <p class="text">Điện tử - Gia dụng</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/noi-com-dien-cuckoo/">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-470.png&w=256&q=75"
+                            alt="điện tử-gia dụng">
+                    </div>
+                    <p class="text">Điện tử - Gia dụng</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/noi-com-dien-cuckoo/">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-470.png&w=256&q=75"
+                            alt="điện tử-gia dụng">
+                    </div>
+                    <p class="text">Điện tử - Gia dụng</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/noi-com-dien-cuckoo/">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-470.png&w=256&q=75"
+                            alt="điện tử-gia dụng">
+                    </div>
+                    <p class="text">Điện tử - Gia dụng</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/noi-com-dien-cuckoo/">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-470.png&w=256&q=75"
+                            alt="điện tử-gia dụng">
+                    </div>
+                    <p class="text">Điện tử - Gia dụng</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/noi-com-dien-cuckoo/">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-470.png&w=256&q=75"
+                            alt="điện tử-gia dụng">
+                    </div>
+                    <p class="text">Điện tử - Gia dụng</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/noi-com-dien-cuckoo/">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-470.png&w=256&q=75"
+                            alt="điện tử-gia dụng">
+                    </div>
+                    <p class="text">Điện tử - Gia dụng</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/noi-com-dien-cuckoo/">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-470.png&w=256&q=75"
+                            alt="điện tử-gia dụng">
+                    </div>
+                    <p class="text">Điện tử - Gia dụng</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/noi-com-dien-cuckoo/">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-470.png&w=256&q=75"
+                            alt="điện tử-gia dụng">
+                    </div>
+                    <p class="text">Điện tử - Gia dụng</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/noi-com-dien-cuckoo/">
+                    <div>
+                        <img class="image"
+                            src="https://sajakorea.com/_next/image?url=https%3A%2F%2Fcloude.sajakorea.com%2F2024%2F04%2F16%2FGroup-470.png&w=256&q=75"
+                            alt="điện tử-gia dụng">
+                    </div>
+                    <p class="text">Điện tử - Gia dụng</p>
+                </a>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="main-container">
+        <div class="grid-category-container">
+            <div>
+                <a class="one" href="/san-pham/danh-muc-san-pham/ho-tro-duong-ruot/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-44.png" alt="img">
+                    </div>
+                    <p class="text">Hỗ trợ đường ruột</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/ho-tro-xuong-khop/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-74.png" alt="img">
+                    </div>
+                    <p class="text">Hỗ trợ xương khớp</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/hong-sam-nhan-sam/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-21.png" alt="img">
+                    </div>
+                    <p class="text">Hồng sâm nhân sâm</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/my-pham/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-20.png" alt="img">
+                    </div>
+                    <p class="text">Mỹ phẩm</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/san-pham-thu-cung/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-26.png" alt="img">
+                    </div>
+                    <p class="text">Sản phẩm thú cưng</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/san-pham-truyen-thong-han-quoc/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-75.png" alt="img">
+                    </div>
+                    <p class="text">Sản phẩm truyền thống HQ</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/thuc-pham-da-qua-che-bien/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-76.png" alt="img">
+                    </div>
+                    <p class="text">Thực phẩm đã chế biến</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/suc-khoe-nam-gioi/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-77.png" alt="img">
+                    </div>
+                    <p class="text">Sức khoẻ nam giới</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/tpcn-bo-gan/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-78.png" alt="img">
+                    </div>
+                    <p class="text">TPCN bổ gan</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/tpcn-bo-mat/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-24.png" alt="img">
+                    </div>
+                    <p class="text">TPCNbổ mắt</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/tpcn-ho-tro-giam-can-lam-dep/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-22.png" alt="img">
+                    </div>
+                    <p class="text">Giảm cân làm đẹp</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/vitamin-khoang-chat/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-25.png" alt="img">
+                    </div>
+                    <p class="text">Vitamin khoáng chất</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/tra-thao-moc/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-23.png" alt="img">
+                    </div>
+                    <p class="text">Trà thảo mộc</p>
+                </a>
+            </div>
+            <div>
+                <a href="/san-pham/danh-muc-san-pham/tuan-hoan-mau/">
+                    <div>
+                        <img src="https://cloude.muatuhanquoc.com/2024/01/22/image-27.png" alt="img">
+                    </div>
+                    <p class="text">Tuần hoàn máu</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="wrap">
+        <div class="child">
+            <div class="child-img">
+                <img src="https://cloude.muatuhanquoc.com/2024/01/23/XzULSspI-quy-trinh-mua-hang-04.png"
+                    alt="quy-trinh-mua-hang-03" srcset="">
+            </div>
+            <p style="color: #449666">
+                <a href="/uap-register-page/">Đăng ký tài khoản và cài đặt tiện ích</a>
+            </p>
+        </div>
+        <div class="child">
+            <div class="child-img">
+                <img src="https://cloude.muatuhanquoc.com/2024/07/12/mthq_hdweb-01.png" alt="quy-trinh-mua-hang-05"
+                    srcset="">
+            </div>
+            <p style="color: #449666">Thêm sản phẩm & Thanh toán Số tiền đặt cọc tối thiểu (100.000đ/sản phẩm)</p>
+        </div>
+        <div class="child">
+            <div class="child-img">
+                <img src="https://cloude.muatuhanquoc.com/2024/07/12/mthq_hdweb-02.png" alt="quy-trinh-mua-hang-06"
+                    srcset="">
+            </div>
+            <p style="color: #449666">Đơn hàng đến kho Hàn cân ký & gửi về Việt Nam. Khách thanh toán số tiền còn lại
+            </p>
+        </div>
+        <div class="child">
+            <div class="child-img">
+                <img src="https://cloude.muatuhanquoc.com/2024/01/23/hbeXhQkD-quy-trinh-mua-hang-07-e1705977565879.png"
+                    alt="quy-trinh-mua-hang-07" srcset="">
+            </div>
+            <p style="color: #449666">Vận chuyển đơn hàng về Việt Nam bằng đường hàng không.</p>
+        </div>
+        <div class="child">
+            <div class="child-img">
+                <img src="https://cloude.muatuhanquoc.com/2024/01/23/2JDt2Nrc-quy-trinh-mua-hang-08-e1705977625828.png"
+                    alt="quy-trinh-mua-hang-08" srcset="">
+            </div>
+            <p style="color: #449666">Giao hàng tại nội địa Việt Nam.</p>
+        </div>
+        <div class="child">
+            <div class="child-img">
+                <img src="https://cloude.muatuhanquoc.com/2024/01/23/z0M9LLsh-quy-trinh-mua-hang-09.png"
+                    alt="quy-trinh-mua-hang-09" srcset="">
+            </div>
+            <p style="color: #449666">Đơn hàng đến tay khách hàng.</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

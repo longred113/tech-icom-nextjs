@@ -17,7 +17,7 @@ export default function LaptopList() {
         // Simulate data fetching
         setTimeout(() => {
             setIsLoading(false);
-        }, 400); // Adjust the timeout as needed
+        }, 500); // Adjust the timeout as needed
     }, []);
 
     const [laptopList, setLaptopList] = useState<any>(null);
@@ -65,24 +65,26 @@ export default function LaptopList() {
                                     <CarouselItem key={product.id} className="basis-1/3 lg:basis-1/5">
                                         <div className="max-w-sm">
                                             <Card>
-                                                <CardContent className="flex flex-col items-center justify-between h-72 p-4">
-                                                    <div className="w-full aspect-w-1 aspect-h-1">
-                                                        <Image
-                                                            src={imageUrl}
-                                                            alt={product.name}
-                                                            className="object-contain"
-                                                            width={500}
-                                                            height={500}
-                                                            quality={90}
-                                                            priority
-                                                        />
-                                                    </div>
-                                                    <h3 className="font-medium text-sm">{product.name}</h3>
-                                                    <p className="text-red-500">{product.price.toLocaleString('vi-VN', {
-                                                        style: 'currency',
-                                                        currency: 'VND',
-                                                    })}</p>
-                                                </CardContent>
+                                                <Link href={`/products/${product.name}`}>
+                                                    <CardContent className="flex flex-col items-center justify-between h-72 p-4">
+                                                        <div className="w-full aspect-w-1 aspect-h-1">
+                                                            <Image
+                                                                src={imageUrl}
+                                                                alt={product.name}
+                                                                className="object-contain"
+                                                                width={500}
+                                                                height={500}
+                                                                quality={90}
+                                                                priority
+                                                            />
+                                                        </div>
+                                                        <h3 className="font-medium text-sm">{product.name}</h3>
+                                                        <p className="text-red-500">{product.price.toLocaleString('vi-VN', {
+                                                            style: 'currency',
+                                                            currency: 'VND',
+                                                        })}</p>
+                                                    </CardContent>
+                                                </Link>
                                             </Card>
                                         </div>
                                     </CarouselItem>
@@ -94,12 +96,8 @@ export default function LaptopList() {
                         <CarouselPrevious className="ml-16" />
                         <CarouselNext className="mr-16" />
                     </div>
-                </Carousel>           </div >
-            <div className="text-center my-4">
-                <Link href="/collections/laptop">
-                    <Button className="bg-primary text-white">Xem thêm sản phẩm</Button>
-                </Link>
-            </div>
+                </Carousel>
+            </div >
         </>
     );
 }

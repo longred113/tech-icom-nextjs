@@ -1,10 +1,10 @@
 'use client'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import Layout from "../components/Layout";
 import { CreditCard, ShieldCheck, ShoppingBag, Slash, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FaCreditCard, FaIdCard } from "react-icons/fa6";
-import { IoBagCheck, IoShieldCheckmarkSharp } from "react-icons/io5";
+import { IoBagCheck, IoHome, IoShieldCheckmarkSharp } from "react-icons/io5";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -76,13 +76,16 @@ export default function Cart() {
                 <Breadcrumb className="mb-6">
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="/" className="text-base text-gray-800 font-medium">Trang chủ</BreadcrumbLink>
+                            <BreadcrumbLink href="/" className="text-base font-medium flex items-center gap-1">
+                                <IoHome />
+                                Trang chủ
+                            </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator>
                             <Slash />
                         </BreadcrumbSeparator>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="/components" className="text-base font-medium">Giỏ hàng</BreadcrumbLink>
+                            <BreadcrumbPage className="text-base font-medium">Giỏ hàng</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>

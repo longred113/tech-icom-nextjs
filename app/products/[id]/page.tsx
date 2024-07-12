@@ -13,6 +13,8 @@ import {
 import { Slash } from "lucide-react";
 import Image from "next/image";
 import { IMAGE_NULL } from "@/other/axios";
+import { IoHome } from "react-icons/io5";
+import { Button } from "@/components/ui/button";
 
 function ProductDetail() {
     const param = useParams();
@@ -79,35 +81,37 @@ function ProductDetail() {
     }
     return (
         <Layout>
-            <div className="container mx-auto p-4">
+            <div className="container xl:w-8/12 mx-auto p-4">
                 <Breadcrumb className="">
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="/" className="text-base text-gray-800 font-medium">Trang chủ</BreadcrumbLink>
+                            <BreadcrumbLink href="/" className="text-base font-medium flex items-center gap-1">
+                                <IoHome />
+                                Trang chủ
+                            </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator>
                             <Slash />
                         </BreadcrumbSeparator>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="/products" className="text-base text-gray-800 font-medium">Sản phẩm</BreadcrumbLink>
+                            <BreadcrumbLink href="/products" className="text-base font-medium">Sản phẩm</BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator>
                             <Slash />
                         </BreadcrumbSeparator>
                         <BreadcrumbItem>
-                            <BreadcrumbItem className="text-base font-medium">{product.data.name}</BreadcrumbItem>
+                            <BreadcrumbPage className="text-base font-medium">{product.data.name}</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
-                {/* <h1 className="text-4xl font-bold mb-6">{product.data.name}</h1> */}
                 <div className="flex flex-wrap mt-10">
-                    <div className="w-full lg:w-2/6 px-4 border bg-white">
+                    <div className="w-full lg:w-2/6 px-2 border bg-white">
                         {(
-                            <Image className="w-full p-5 rounded" src={product.data.image?.[0] ? product.data.image[0] : IMAGE_NULL} alt={product.data.name} width={600} height={600} />
+                            <Image className="w-full rounded" src={product.data.image?.[0] ? product.data.image[0] : IMAGE_NULL} alt={product.data.name} width={600} height={600} />
                         )}
                     </div>
                     <div className="w-full lg:w-4/6 px-4 flex flex-col justify-start items-start lg:items-start border bg-white">
-                        <div className="text-xl font-medium mb-4">
+                        <div className="text-lg font-medium mb-4">
                             {product.data.name}
                         </div>
                         <div className="text-xl font-bold mb-4 text-red-500">
@@ -115,21 +119,40 @@ function ProductDetail() {
                         </div>
                         {
                             product.data.inventory_number > 0 ? (
-                                <button className="mb-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+                                <Button
+                                    className="p-6 font-medium uppercase text-lg text-white"
                                     onClick={() => { handleSubmit }}
-                                >
-                                    Mua ngay
-                                </button>
+                                >Mua Ngay</Button>
                             ) : (
-                                <button disabled className="mb-4 bg-slate-500 text-white px-4 py-2 rounded">
-                                    Hết hàng
-                                </button>
+                                <Button
+                                    className="p-6 font-medium uppercase text-lg text-white mb-4 bg-slate-500 px-4 py-2 rounded"
+                                    disabled
+                                >Hết hàng</Button>
                             )
                         }
-                        <ul className="text-gray-700 text-base">
-                            {product?.data?.description && Object.keys(product?.data?.description).map((key: string, index: number) => (
+                        <ul className="text-gray-700 text-base my-5">
+                            {product?.data?.categoryId === 1 && product?.data?.description && Object.keys(product?.data?.description).map((key: string, index: number) => (
                                 <li key={index} className="mb-2"><strong>{key}:</strong> {product.data.description[key]}</li>
                             ))}
+                            {product?.data?.categoryId === 5 && (
+                                <>
+                                    <div>
+                                        <strong>Thông tin chung:</strong>
+                                    </div>
+                                    <div>
+                                        <strong>Hãng sản xuất: </strong>
+                                        {product?.data?.producer}
+                                    </div>
+                                    <div>
+                                        <strong>Bảo hành: </strong>
+                                        24 Tháng
+                                    </div>
+                                    <div>
+                                        <strong>Kết nối: </strong>
+                                        Wireless
+                                    </div>
+                                </>
+                            )}
                         </ul>
                     </div>
                 </div>

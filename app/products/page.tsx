@@ -2,8 +2,9 @@
 import { ReactElement, useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import ProductCard from "../components/productCart";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Slash } from "lucide-react";
+import { IoHome } from "react-icons/io5";
 
 export default function Product() {
     const [products, setProducts] = useState<any[]>([]);
@@ -28,13 +29,16 @@ export default function Product() {
                 <Breadcrumb className="mb-6">
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="/" className="text-base text-gray-800 font-medium">Trang chủ</BreadcrumbLink>
+                            <BreadcrumbLink href="/" className="text-base font-medium flex items-center gap-1">
+                                <IoHome />
+                                Trang chủ
+                            </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator>
                             <Slash />
                         </BreadcrumbSeparator>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="/components" className="text-base font-medium">Sản phẩm</BreadcrumbLink>
+                            <BreadcrumbPage className="text-base font-medium">Sản phẩm</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
