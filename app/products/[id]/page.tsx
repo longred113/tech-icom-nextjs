@@ -100,25 +100,25 @@ function ProductDetail() {
                             <Slash />
                         </BreadcrumbSeparator>
                         <BreadcrumbItem>
-                            <BreadcrumbPage className="text-base font-medium">{product.data.name}</BreadcrumbPage>
+                            <BreadcrumbPage className="text-base font-medium">{product?.data?.name}</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
                 <div className="flex flex-wrap mt-10">
                     <div className="w-full lg:w-2/6 px-2 border bg-white">
                         {(
-                            <Image className="w-full rounded" src={product.data.image?.[0] ? product.data.image[0] : IMAGE_NULL} alt={product.data.name} width={600} height={600} />
+                            <Image className="w-full rounded" src={product?.data?.image?.[0] ? product?.data?.image[0] : IMAGE_NULL} alt={product?.data?.name} width={600} height={600} />
                         )}
                     </div>
                     <div className="w-full lg:w-4/6 px-4 flex flex-col justify-start items-start lg:items-start border bg-white">
                         <div className="text-lg font-medium mb-4">
-                            {product.data.name}
+                            {product?.data?.name}
                         </div>
                         <div className="text-xl font-bold mb-4 text-red-500">
                             {formattedPrice}
                         </div>
                         {
-                            product.data.inventory_number > 0 ? (
+                            product?.data?.inventory_number > 0 ? (
                                 <Button
                                     className="p-6 font-medium uppercase text-lg text-white"
                                     onClick={() => { handleSubmit }}
@@ -132,7 +132,7 @@ function ProductDetail() {
                         }
                         <ul className="text-gray-700 text-base my-5">
                             {product?.data?.categoryId === 1 && product?.data?.description && Object.keys(product?.data?.description).map((key: string, index: number) => (
-                                <li key={index} className="mb-2"><strong>{key}:</strong> {product.data.description[key]}</li>
+                                <li key={index} className="mb-2"><strong>{key}:</strong> {product?.data?.description[key]}</li>
                             ))}
                             {product?.data?.categoryId === 5 && (
                                 <>

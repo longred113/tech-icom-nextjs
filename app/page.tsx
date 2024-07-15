@@ -58,7 +58,7 @@ export default function Home() {
           <div className="h-fit my-4 hidden lg:block pr-3 flex-shrink-0">
             <Sidebar onHover={handleHover} onLeave={handleLeave} />
           </div>
-          <div className="w-full mx-auto flex justify-center py-4 relative">
+          <div className="w-full mx-auto flex justify-center pt-4 pb-10 relative">
             <div className="w-full">
               <Image
                 alt="image"

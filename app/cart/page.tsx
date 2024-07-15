@@ -158,7 +158,7 @@ export default function Cart() {
                                 </>
                             ) : (
                                 <>
-                                    <div className="mb-4">
+                                    <div className="mt-4">
                                         <p className="text-gray-700">Hiện tại giỏ hàng của bạn đang trống.</p>
                                     </div>
                                     <div className="flex justify-end">

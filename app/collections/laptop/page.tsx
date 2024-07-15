@@ -26,21 +26,23 @@ export default function LaptopPage() {
     const allProducts = Array.from({ length: 20 }).map((_, index) => (
         <div className="lg:w-1/5 w-1/2 md:w-1/3 p-2" key={index}>
             <Card>
-                <CardContent className="flex flex-col items-center justify-between h-72 p-4">
-                    <div className="w-full aspect-w-1 aspect-h-1 overflow-hidden">
-                        <Image
-                            src={IMAGE_NULL}
-                            alt={""}
-                            className="object-contain"
-                            width={500}
-                            height={500}
-                            quality={90}
-                            priority
-                        />
-                    </div>
-                    <h3 className="font-medium text-sm">test</h3>
-                    <p className="text-red-500">1.000.000đ</p>
-                </CardContent>
+                <Link href={`/products/${index}`}>
+                    <CardContent className="flex flex-col items-center justify-between h-72 p-4">
+                        <div className="w-full aspect-w-1 aspect-h-1 overflow-hidden">
+                            <Image
+                                src={IMAGE_NULL}
+                                alt={""}
+                                className="object-contain"
+                                width={500}
+                                height={500}
+                                quality={90}
+                                priority
+                            />
+                        </div>
+                        <h3 className="font-medium text-sm">test</h3>
+                        <p className="text-red-500">1.000.000đ</p>
+                    </CardContent>
+                </Link>
             </Card>
         </div>
     ));

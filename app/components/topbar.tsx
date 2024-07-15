@@ -75,7 +75,7 @@ export default function TopBar() {
     };
 
     return (
-        <nav className={`bg-primary p-4 ${isSticky ? 'fixed top-0 left-0 w-full z-50' : ''}`}>
+        <nav className={`bg-primary p-4 transition-all duration-300 ease-in-out ${isSticky ? 'sticky top-0 left-0 w-full z-50' : ''}`}>
             <div className="mx-auto flex justify-between items-center text-sm xl:w-8/12">
                 <div>
                     <SidebarMobile user={user} />
