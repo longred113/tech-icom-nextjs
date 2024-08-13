@@ -7,12 +7,27 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { IMAGE_NULL } from "@/other/axios";
 import { Slash } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { IoHome } from "react-icons/io5";
 
 export default function MousePage() {
     const [visibleProducts, setVisibleProducts] = useState(10);
     const [loading, setLoading] = useState(true);
+    const [mouseList, setMouseList] = useState<any>(null);
+
+    const getMouseList = async () => {
+        const res = await fetch("/api/product?param=GETPRODUCTBYCATEGORY&name=mouse", {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const data = await res.json();
+        setMouseList(data.data.data);
+    };
+    useEffect(() => {
+        getMouseList();
+    }, []);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -22,24 +37,29 @@ export default function MousePage() {
         return () => clearTimeout(timer);
     }, []);
 
-    const allProducts = Array.from({ length: 20 }).map((_, index) => (
-        <div className="lg:w-1/5 w-1/2 md:w-1/3 p-2" key={index}>
+    const allProducts = mouseList?.map((product: any) => (
+        <div className="lg:w-1/5 w-1/2 md:w-1/3 p-2" key={product.id}>
             <Card>
-                <CardContent className="flex flex-col items-center justify-between h-72 p-4">
-                    <div className="w-full aspect-w-1 aspect-h-1 overflow-hidden">
-                        <Image
-                            src={IMAGE_NULL}
-                            alt={""}
-                            className="object-contain"
-                            width={500}
-                            height={500}
-                            quality={90}
-                            priority
-                        />
-                    </div>
-                    <h3 className="font-medium text-sm">test</h3>
-                    <p className="text-red-500">1.000.000đ</p>
-                </CardContent>
+                <Link href={`/products/${product.name}`}>
+                    <CardContent className="flex flex-col items-center justify-between h-72 p-4">
+                        <div className="w-full aspect-w-1 aspect-h-1 overflow-hidden">
+                            <Image
+                                src={product.image?.[0]}
+                                alt={product.name}
+                                className="object-contain"
+                                width={500}
+                                height={500}
+                                quality={90}
+                                priority
+                            />
+                        </div>
+                        <h3 className="font-medium text-sm">{product.name}</h3>
+                        <p className="text-red-500">{product.price.toLocaleString('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                        })}</p>
+                    </CardContent>
+                </Link>
             </Card>
         </div>
     ));

@@ -15,6 +15,8 @@ import Image from "next/image";
 import { IMAGE_NULL } from "@/other/axios";
 import { IoHome } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/ReactToastify.min.css';
 
 function ProductDetail() {
     const param = useParams();
@@ -66,13 +68,18 @@ function ProductDetail() {
                         "Content-type": "application/json; charset=UTF-8",
                     },
                     body: JSON.stringify({
-                        productId: product?.data?._id,
+                        productId: `${product?.data?.id}`,
                         quantity: 1,
                     })
                 })
-            } catch (error) {
 
+                const data = await res.json();
+                console.log(data);
+            } catch (error) {
+                console.log(error);
             }
+        } else {
+            toast.error("Bạn chưa đăng nhập!");
         }
     }
 
@@ -82,6 +89,7 @@ function ProductDetail() {
     return (
         <Layout>
             <div className="container xl:w-8/12 mx-auto p-4">
+                <ToastContainer />
                 <Breadcrumb className="">
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -121,7 +129,7 @@ function ProductDetail() {
                             product?.data?.inventory_number > 0 ? (
                                 <Button
                                     className="p-6 font-medium uppercase text-lg text-white"
-                                    onClick={() => { handleSubmit }}
+                                    onClick={() => { handleSubmit() }}
                                 >Mua Ngay</Button>
                             ) : (
                                 <Button

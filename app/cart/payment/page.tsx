@@ -5,13 +5,23 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { IMAGE_NULL } from "@/other/axios"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 export default function CartPayment() {
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [products, setProducts] = useState<any[]>([]);
+    const [userPayInfo, setUserPayInfo] = useState<any>(null);
+    const [customData, setCustomData] = useState<any[]>([]);
+
+    const router = useRouter();
+
     const formSchema = z.object({
         type: z.enum(["COD", "Bank"], {
             required_error: "You need to select a notification type."
@@ -24,11 +34,60 @@ export default function CartPayment() {
             type: "COD",
         },
     });
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values)
+        userPayInfo.payment_method = values.type;
+        try {
+            const res = await fetch("/api/cart?param=SUBMITORDER", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+                body: JSON.stringify({ products: customData, cartInfo: userPayInfo }),
+            });
+            const data = await res.json();
+            console.log(data);
+            if (data.data.code === 200) {
+                router.push("/cart/thankyou");
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
+    const payInfo = () => {
+        const data = localStorage.getItem("formData");
+        if (data) {
+            setUserPayInfo(JSON.parse(data));
+        }
+    }
+
+    const getCart = async () => {
+        try {
+            const res = await fetch("/api/cart?param=GETCART", {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+            });
+            const data = await res.json();
+            setProducts(data.data.data.cartItems);
+            setTotalPrice(data.data.data.totalPrice);
+            const customData =
+                data.data.data.cartItems.map((item: any) => ({
+                    "productId": item.productData.id,
+                    "quantity": item.quantity
+                }))
+            setCustomData(customData);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        payInfo();
+        getCart();
+    }, []);
     return (
         <Layout>
             <div className="container mx-auto p-4 md:h-full h-screen">
@@ -42,50 +101,55 @@ export default function CartPayment() {
                                     <div className="flex gap-5">
                                         <div>
                                             <Label>Họ tên: </Label>
-                                            <span>12312321</span>
+                                            <span>{userPayInfo?.username}</span>
                                         </div>
                                         <div>
                                             <Label>Số điện thoại: </Label>
-                                            <span>4324324</span>
+                                            <span>{userPayInfo?.phone}</span>
                                         </div>
                                     </div>
                                     <div>
                                         <Label>Địa chỉ nhận hàng: </Label>
-                                        <span>123 abc, abc, adsa</span>
+                                        <span>{userPayInfo?.address + ", " + userPayInfo?.ward + ", " + userPayInfo?.district + ", " + userPayInfo?.city}</span>
                                     </div>
                                     <div>
                                         <Label>Phương thức giao hàng: </Label>
-                                        <span>Giao hàng nhanh</span>
+                                        {userPayInfo?.type === "free ship" &&
+                                            <span>Miễn phí vận chuyển</span>}
                                     </div>
                                 </div>
                             </div>
                             <div className="my-3 border-b-2">
                                 <h3 className="text-lg font-medium">Sản phẩm</h3>
-                                <div className="flex w-full p-3">
-                                    <div className="flex-shrink-0">
-                                        <Image src={"https://pcmi8upoqradiz4smxabg0comvfcje9mz19juor3psi8p0.muatuhanquoc.com/2023/07/EnA7Yawg-woocommerce-placeholder.png"}
-                                            alt={"something"}
-                                            className="md:w-2/3 w-1/2 h-auto mb-2 border-2"
-                                            width={90} // Specify the width of the image
-                                            height={90} // Specify the height of the image
-                                            quality={90} // Specify the image quality
-                                            priority
-                                        />
-                                    </div>
-                                    <div className="md:flex md:flex-row w-full">
-                                        <div className="w-full mx-3">
-                                            <h3>{"productName"}</h3>
-                                        </div>
-                                        <div className="text-end">
-                                            <div className="text-red-600 font-semibold">{"product price"}đ</div>
-                                            <div className="">
-                                                <span className="mx-2">{"quantity"}</span>
+                                {products?.map((item, index) => {
+                                    return (
+                                        <div key={index} className="flex w-full p-3">
+                                            <div className="flex-shrink-0">
+                                                <Image src={item.productData.image ? item.productData.image[0] : IMAGE_NULL}
+                                                    alt={item.productData.name}
+                                                    className="md:w-2/3 w-1/2 h-auto mb-2 border-2"
+                                                    width={90} // Specify the width of the image
+                                                    height={90} // Specify the height of the image
+                                                    quality={90} // Specify the image quality
+                                                    priority
+                                                />
+                                            </div>
+                                            <div className="md:flex md:flex-row w-full">
+                                                <div className="w-full mx-3">
+                                                    <h3>{item.productData.name}</h3>
+                                                </div>
+                                                <div className="text-end">
+                                                    <div className="text-red-600 font-semibold">{item?.productData?.price?.toLocaleString('vi-VN')}đ</div>
+                                                    <div className="">
+                                                        <span className="mx-2">{item.quantity}</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    )
+                                })}
                                 <div className="px-3 mb-3 text-end">
-                                    <span className="font-semibold">Tổng tiền: {"total price"}đ</span>
+                                    <span className="font-semibold">Tổng tiền: {totalPrice.toLocaleString('vi-VN')}đ</span>
                                 </div>
                             </div>
                             <div className="my-3">
@@ -125,9 +189,7 @@ export default function CartPayment() {
                                 />
                             </div>
                             <Button type="submit" className="w-full text-xl uppercase">
-                                <Link href="/cart/thankyou">
-                                    Xác nhận
-                                </Link>
+                                Xác nhận
                             </Button>
                         </form>
                     </Form>

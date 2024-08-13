@@ -73,6 +73,7 @@ export default function TopBar() {
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
     };
+    console.log(cart);
 
     return (
         <nav className={`bg-primary p-4 transition-all duration-300 ease-in-out ${isSticky ? 'sticky top-0 left-0 w-full z-50' : ''}`}>
@@ -100,8 +101,8 @@ export default function TopBar() {
                             <IoMdCart className="text-2xl" />
 
                             <div className="md:right-3 -right-1 -top-2.5 absolute bg-red-600 text-white px-1.5 text-sm rounded-full text-center">
-                                {cart !== null ? (
-                                    cart?.length
+                                {cart?.cartItems.length > 0 ? (
+                                    cart?.cartItems?.reduce((acc: any, item: any) => acc + item.quantity, 0)
                                 ) : (null)}
                             </div>
                         </div>

@@ -29,18 +29,31 @@ export default function Cart() {
                 },
             });
             const data = await res.json();
-            setProducts(data.data.data);
-            let total = 0;
-            data.data.data.forEach((item: any) => {
-                if (item.price && item.quantity) {
-                    total += item.price * item.quantity;
-                }
-            });
-            setTotalPrice(total);
+            setProducts(data.data.data.cartItems);
+            setTotalPrice(data.data.data.totalPrice);
         } catch (error) {
             console.log(error);
         }
     }
+
+    const updateQuantityCart = async (productId: string, type: string) => {
+        try {
+            const res = await fetch("/api/cart?param=UPDATECARTQUANTITY", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+                body: JSON.stringify({ productId, type }),
+            });
+            const data = await res.json();
+            setProducts(data.data.data.cartItems);
+            setTotalPrice(data.data.data.totalPrice);
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         getCart();
     }, []);
@@ -68,7 +81,6 @@ export default function Cart() {
             window.removeEventListener('hashchange', handleHashChange);
         };
     }
-    console.log(products);
 
     return (
         <Layout>
@@ -100,8 +112,8 @@ export default function Cart() {
                                             return (
                                                 <div key={index} className="flex p-4">
                                                     <div className="flex-shrink-0">
-                                                        <Image src={item.image ? item.image : IMAGE_NULL}
-                                                            alt={item.productName}
+                                                        <Image src={item.productData.image ? item.productData.image[0] : IMAGE_NULL}
+                                                            alt={item.productData.name}
                                                             className="h-auto mb-2 border-2"
                                                             width={140} // Specify the width of the image
                                                             height={140} // Specify the height of the image
@@ -120,14 +132,14 @@ export default function Cart() {
                                                     </div>
                                                     <div className="md:flex md:flex-row w-full">
                                                         <div className="w-full mx-3">
-                                                            <h3>{item.productName}</h3>
+                                                            <h3>{item.productData.name}</h3>
                                                         </div>
                                                         <div className="text-end">
-                                                            <div className="text-red-600 font-semibold">{item?.price?.toLocaleString('vi-VN')}đ</div>
+                                                            <div className="text-red-600 font-semibold">{item?.productData?.price?.toLocaleString('vi-VN')}đ</div>
                                                             <div className="">
                                                                 <button
                                                                     className="bg-gray-200 px-2 py-1 rounded"
-                                                                    onClick={() => updateQuantity(index, item.quantity - 1)}
+                                                                    onClick={() => [updateQuantityCart(item.productData.id, "decrement"), updateQuantity(index, item.quantity - 1)]}
                                                                     disabled={item.quantity === 1}
                                                                 >
                                                                     -
@@ -135,7 +147,7 @@ export default function Cart() {
                                                                 <span className="mx-2">{item.quantity}</span>
                                                                 <button
                                                                     className="bg-gray-200 px-2 py-1 rounded"
-                                                                    onClick={() => updateQuantity(index, item.quantity + 1)}
+                                                                    onClick={() => [updateQuantityCart(item.productData.id, "increment"), updateQuantity(index, item.quantity + 1)]}
                                                                 >
                                                                     +
                                                                 </button>

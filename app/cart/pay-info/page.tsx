@@ -11,15 +11,29 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Link from "next/link";
 import CartStep from "@/app/components/cartstep";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
 
 
 export default function CartInfo() {
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [city, setCity] = useState<any>(null);
+    const [district, setDistrict] = useState<any>(null);
+    const [ward, setWard] = useState<any>(null);
+    const [selectedCity, setSelectedCity] = useState<string>("");
+    const [selectedDistrict, setSelectedDistrict] = useState('');
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
+    const [selectedWards, setSelectedWards] = useState('');
+    const router = useRouter();
+
     const formSchema = z.object({
         username: z.string().min(2, {
-            message: "Họ tên phải có it nhất 2 chữ cái",
+            message: "Họ tên phải có ít nhất 2 chữ cái",
         }),
         phone: z.string().min(10, {
-            message: "Số điện thoại phải có it nhất 10 ký tự",
+            message: "Số điện thoại phải có ít nhất 10 ký tự",
         }).regex(/^0\d+$/, {
             message: "Số điện thoại không đúng định dạng"
         }),
@@ -27,7 +41,7 @@ export default function CartInfo() {
         city: z.string().optional(),
         district: z.string().optional(),
         ward: z.string().optional(),
-        type: z.enum(["fast", "normal"], {
+        type: z.enum(["free ship", "normal"], {
             required_error: "You need to select a notification type."
         })
     });
@@ -41,15 +55,82 @@ export default function CartInfo() {
             city: "",
             district: "",
             ward: "",
-            type: "fast",
+            type: "free ship",
         },
     });
     function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+        localStorage.setItem("formData", JSON.stringify(values));
+        router.push('/cart/payment');
     }
-    // console.log(username, phone, address)
+    const getCart = async () => {
+        try {
+            const res = await fetch("/api/cart?param=GETCART", {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+            });
+            const data = await res.json();
+            setTotalPrice(data.data.data.totalPrice);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const getAddress = async () => {
+        try {
+            const res = await fetch("/api/cart?param=GETADDRESSDETAIL", {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+            });
+            const data = await res.json();
+            const cities = data.data.data.map((item: any) => item.Name);
+            setCity(data.data.data);
+        } catch (error) {
+
+        }
+    }
+    useEffect(() => {
+        getCart();
+        getAddress();
+    }, []);
+
+    const getDistrictsByCity = (cityName: any) => {
+        if (!city) return [];
+        const selectedCity = city.find((city: any) => city.Name === cityName);
+        return selectedCity ? selectedCity.Districts : [];
+    }
+
+    // Hàm để lấy danh sách các phường (wards) trong quận đã chọn
+    const getWardsByDistrict = (values: z.infer<typeof formSchema>) => {
+        if (!city) return [];
+        const selectedCity = city.find((city: any) => city.Name === values.city);
+        console.log(selectedCity);
+        if (selectedCity) {
+            const selectedDistrict = selectedCity.Districts.find((district: any) => district.Name === values.district);
+            return selectedDistrict ? selectedDistrict.Wards : [];
+        }
+        return [];
+    }
+
+    useEffect(() => {
+        setDistricts(getDistrictsByCity(selectedCity));
+        if (selectedCity) {
+            form.resetField('district');
+            setSelectedDistrict(''); // Reset quận khi thành phố thay đổi
+            setWards([]); // Reset phường khi thành phố thay đổi
+        }
+        setSelectedDistrict(''); // Reset quận khi thành phố thay đổi
+        setWards([]); // Reset phường khi thành phố thay đổi
+    }, [selectedCity]);
+
+    useEffect(() => {
+        setWards(getWardsByDistrict(form.getValues()));
+        if (selectedDistrict) {
+            form.resetField('ward');
+        }
+    }, [selectedDistrict]);
 
     return (
         <Layout>
@@ -85,15 +166,19 @@ export default function CartInfo() {
                                     <div className="w-2/5 mb-3">
                                         <FormField control={form.control} name="city" render={({ field }) => {
                                             return <FormItem>
-                                                <Select onValueChange={field.onChange}>
+                                                <Select onValueChange={(value: any) => {
+                                                    field.onChange(value);
+                                                    setSelectedCity(value);
+                                                }}>
                                                     <FormControl>
                                                         <SelectTrigger>
                                                             <SelectValue placeholder="Chọn Tỉnh, thành phố" />
                                                         </SelectTrigger>
                                                     </FormControl>
                                                     <SelectContent>
-                                                        <SelectItem value="1">Item 1</SelectItem>
-                                                        <SelectItem value="2">Item 2</SelectItem>
+                                                        {city != null && city.map((city: any) => (
+                                                            <SelectItem key={city.Name} value={city.Name}>{city.Name}</SelectItem>
+                                                        ))}
                                                     </SelectContent>
                                                 </Select>
                                                 <FormMessage />
@@ -103,15 +188,19 @@ export default function CartInfo() {
                                     <div className="w-2/5 mb-3">
                                         <FormField control={form.control} name="district" render={({ field }) => {
                                             return <FormItem>
-                                                <Select>
+                                                <Select onValueChange={(value: any) => {
+                                                    field.onChange(value);
+                                                    setSelectedDistrict(value);
+                                                }}>
                                                     <FormControl>
-                                                        <SelectTrigger>
+                                                        <SelectTrigger disabled={selectedCity === ""}>
                                                             <SelectValue placeholder="Chọn Quận,Huyện" />
                                                         </SelectTrigger>
                                                     </FormControl>
                                                     <SelectContent>
-                                                        <SelectItem value="11">Item 1</SelectItem>
-                                                        <SelectItem value="22">Item 2</SelectItem>
+                                                        {districts != null && districts.map((district: any) => (
+                                                            <SelectItem key={district.Name} value={district.Name}>{district.Name}</SelectItem>
+                                                        ))}
                                                     </SelectContent>
                                                 </Select>
                                                 <FormMessage />
@@ -121,15 +210,19 @@ export default function CartInfo() {
                                     <div className="w-2/5">
                                         <FormField control={form.control} name="ward" render={({ field }) => {
                                             return <FormItem>
-                                                <Select>
+                                                <Select onValueChange={(value: any) => {
+                                                    field.onChange(value);
+                                                    setSelectedWards(value);
+                                                }}>
                                                     <FormControl>
-                                                        <SelectTrigger>
+                                                        <SelectTrigger disabled={selectedDistrict === ""}>
                                                             <SelectValue placeholder="Chọn Phường,Xã" />
                                                         </SelectTrigger>
                                                     </FormControl>
                                                     <SelectContent>
-                                                        <SelectItem value="111">Item 1</SelectItem>
-                                                        <SelectItem value="222">Item 2</SelectItem>
+                                                        {wards != null && wards.map((ward: any) => (
+                                                            <SelectItem key={ward.Name} value={ward.Name}>{ward.Name}</SelectItem>
+                                                        ))}
                                                     </SelectContent>
                                                 </Select>
                                                 <FormMessage />
@@ -163,15 +256,15 @@ export default function CartInfo() {
                                                         <div className="flex justify-between">
                                                             <FormItem className="flex items-center space-x-3 space-y-0">
                                                                 <FormControl>
-                                                                    <RadioGroupItem value="fast" />
+                                                                    <RadioGroupItem value="free ship" />
                                                                 </FormControl>
                                                                 <FormLabel className="font-normal">
-                                                                    All new messages
+                                                                    Miễn phí vận chuyển
                                                                 </FormLabel>
                                                             </FormItem>
-                                                            <span className="">1</span>
+                                                            <span className="">0₫</span>
                                                         </div>
-                                                        <div className="flex justify-between">
+                                                        {/* <div className="flex justify-between">
                                                             <FormItem className="flex items-center space-x-3 space-y-0">
                                                                 <FormControl>
                                                                     <RadioGroupItem value="normal" />
@@ -181,7 +274,7 @@ export default function CartInfo() {
                                                                 </FormLabel>
                                                             </FormItem>
                                                             <span className="">1</span>
-                                                        </div>
+                                                        </div> */}
                                                     </RadioGroup>
                                                 </FormControl>
                                                 <FormMessage />
@@ -190,23 +283,21 @@ export default function CartInfo() {
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div className="my-5">
                                 <div className="flex justify-between">
-                                    <span className="text-lg font-medium">Tổng tiền:{" "}</span>
+                                    <span className="text-lg font-medium">Phí vận chuyển:{" "}</span>
                                     {/* <span className="text-red-600 text-xl font-bold">{totalPrice.toLocaleString('vi-VN')}đ</span> */}
-                                    <span className="text-sm font-medium">2312321312đ</span>
+                                    <span className="text-sm font-medium">Miễn phí</span>
                                 </div>
 
                                 <div className="flex justify-between">
                                     <span className="text-lg font-medium">Tổng tiền:{" "}</span>
                                     {/* <span className="text-red-600 text-xl font-bold">{totalPrice.toLocaleString('vi-VN')}đ</span> */}
-                                    <span className="text-red-600 text-xl font-bold">1111111đ</span>
+                                    <span className="text-red-600 text-xl font-bold">{totalPrice.toLocaleString('vi-VN')}₫</span>
                                 </div>
                             </div>
                             <Button type="submit" className="w-full text-xl uppercase">
-                                <Link href="/cart/payment">
-                                    Đặt hàng ngay
-                                </Link>
+                                Đặt hàng ngay
                             </Button>
                         </form>
                     </Form>
