@@ -1,4 +1,5 @@
 'use client'
+import { useCart } from "@/app/components/cartContext"
 import CartStep from "@/app/components/cartstep"
 import Layout from "@/app/components/Layout"
 import { Button } from "@/components/ui/button"
@@ -19,6 +20,7 @@ export default function CartPayment() {
     const [products, setProducts] = useState<any[]>([]);
     const [userPayInfo, setUserPayInfo] = useState<any>(null);
     const [customData, setCustomData] = useState<any[]>([]);
+    const { fetchCart } = useCart();
 
     const router = useRouter();
 
@@ -64,17 +66,11 @@ export default function CartPayment() {
 
     const getCart = async () => {
         try {
-            const res = await fetch("/api/cart?param=GETCART", {
-                method: "GET",
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                },
-            });
-            const data = await res.json();
-            setProducts(data.data.data.cartItems);
-            setTotalPrice(data.data.data.totalPrice);
+            const res = await fetchCart();
+            setProducts(res.data.data.cartItems);
+            setTotalPrice(res.data.data.totalPrice);
             const customData =
-                data.data.data.cartItems.map((item: any) => ({
+                res.data.data.cartItems.map((item: any) => ({
                     "productId": item.productData.id,
                     "quantity": item.quantity
                 }))

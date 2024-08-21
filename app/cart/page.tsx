@@ -13,42 +13,33 @@ import { useSearchParams } from "next/navigation";
 import CartInfo from "../components/cartstep";
 import CartStep from "../components/cartstep";
 import { IMAGE_NULL } from "@/other/axios";
+import { useCart } from "../components/cartContext";
 
 export default function Cart() {
     const [products, setProducts] = useState<any[]>([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [hash, setHash] = useState<string | null>(null);
-
+    const { updateCart, deleteCartItem, fetchCart } = useCart();
 
     const getCart = async () => {
         try {
-            const res = await fetch("/api/cart?param=GETCART", {
-                method: "GET",
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                },
-            });
-            const data = await res.json();
-            setProducts(data.data.data.cartItems);
-            setTotalPrice(data.data.data.totalPrice);
+
+            const res = await fetchCart();
+            setProducts(res.data.data.cartItems);
+            calculateTotalPrice(res.data.data.cartItems);
         } catch (error) {
             console.log(error);
         }
     }
 
+    const calculateTotalPrice = (items: any) => {
+        const total = items.reduce((acc: any, item: any) => acc + item.quantity * item.productData.price, 0);
+        setTotalPrice(total);
+    };
+
     const updateQuantityCart = async (productId: string, type: string) => {
         try {
-            const res = await fetch("/api/cart?param=UPDATECARTQUANTITY", {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                },
-                body: JSON.stringify({ productId, type }),
-            });
-            const data = await res.json();
-            setProducts(data.data.data.cartItems);
-            setTotalPrice(data.data.data.totalPrice);
-            window.location.reload();
+            updateCart({ productId, type });
         } catch (error) {
             console.log(error);
         }
@@ -62,12 +53,19 @@ export default function Cart() {
         setProducts((prevProducts) => {
             const updatedProducts = [...prevProducts];
             updatedProducts[index].quantity = newQuantity;
+            calculateTotalPrice(updatedProducts);
             return updatedProducts;
         });
     };
 
-    const removeCartItem = () => {
+    const removeCartItem = async (productId: any) => {
+        try {
+            const data = await deleteCartItem({
+                productId
+            });
+        } catch (error) {
 
+        }
     }
 
     const getHash = () => {
@@ -109,6 +107,7 @@ export default function Cart() {
                                 <>
                                     <div className="border-b-2 mb-5">
                                         {products?.map((item, index) => {
+                                            console.log(item.productData);
                                             return (
                                                 <div key={index} className="flex p-4">
                                                     <div className="flex-shrink-0">
@@ -126,7 +125,7 @@ export default function Cart() {
                                                         </Button> */}
                                                             <FaRegTrashAlt />
                                                             <span className="mx-2 hover:text-red-600 cursor-pointer"
-                                                                onClick={removeCartItem}
+                                                                onClick={() => removeCartItem(item.productData.id)}
                                                             >Xoá</span>
                                                         </div>
                                                     </div>
@@ -169,14 +168,17 @@ export default function Cart() {
                                     </Button>
                                 </>
                             ) : (
-                                <>
-                                    <div className="mt-4">
+                                <div className="text-center">
+                                    <div className="mt-10">
                                         <p className="text-gray-700">Hiện tại giỏ hàng của bạn đang trống.</p>
                                     </div>
-                                    <div className="flex justify-end">
-                                        <a href="/products" className="text-indigo-600 hover:underline">Tiếp tục mua sắm</a>
+                                    <div className="mt-5">
+                                        <Button className="w-1/3 text-white">
+                                            <Link href="/products">Tiếp tục mua sắm</Link>
+                                        </Button>
+                                        {/* <a href="/products" className="text-indigo-600 hover:underline">Tiếp tục mua sắm</a> */}
                                     </div>
-                                </>
+                                </div>
                             )
                         }
                     </div>

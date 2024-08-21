@@ -3,9 +3,11 @@ import Footer from "./footer";
 import Sidebar from "./sidebar";
 import SidebarMobile from "./sidebar-mobile";
 import TopBar from "./topbar";
+import { CartProvider } from "./cartContext";
 
 const Layout = ({ children }: any) => {
     return (
+
         <div className="min-h-screen flex flex-col">
             <div className="">
             </div>
@@ -28,6 +30,7 @@ const Layout = ({ children }: any) => {
             </footer> */}
             <Footer />
         </div>
+
     );
 };
 

@@ -10,19 +10,29 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Slash } from "lucide-react";
+import { Loader2, Slash } from "lucide-react";
 import Image from "next/image";
 import { IMAGE_NULL } from "@/other/axios";
 import { IoHome } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/ReactToastify.min.css';
-
+import { useCart } from "@/app/components/cartContext";
+import clsx from "clsx";
+interface AddToCartResponse {
+    code: number;
+    data: number;
+    message: String;
+    status: String;
+    // other properties...
+}
 function ProductDetail() {
     const param = useParams();
     const productName = param.id as string;
     const [product, setProduct] = useState<any>(null);
     const [user, setUser] = useState<any>(null);
+    const { addToCart } = useCart();
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (productName) {
@@ -61,20 +71,16 @@ function ProductDetail() {
 
     const handleSubmit = async () => {
         if (user?.name !== undefined) {
+            setIsLoading(true);
             try {
-                const res = await fetch("/api/cart?param=ADDTOCART", {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8",
-                    },
-                    body: JSON.stringify({
-                        productId: `${product?.data?.id}`,
-                        quantity: 1,
-                    })
-                })
-
-                const data = await res.json();
-                console.log(data);
+                const data = await addToCart({
+                    ...product?.data,
+                    quantity: 1,
+                });
+                if (data.data.code === 200) {
+                    toast.success("Thêm vào giỏ hàng thành công!");
+                    setIsLoading(false);
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -114,6 +120,10 @@ function ProductDetail() {
                 </Breadcrumb>
                 <div className="flex flex-wrap mt-10">
                     <div className="w-full lg:w-2/6 px-2 border bg-white">
+
+                        {/* {cartItems?.reduce((acc, item) => acc + item.quantity, 0) || 0} */}
+
+
                         {(
                             <Image className="w-full rounded" src={product?.data?.image?.[0] ? product?.data?.image[0] : IMAGE_NULL} alt={product?.data?.name} width={600} height={600} />
                         )}
@@ -127,10 +137,14 @@ function ProductDetail() {
                         </div>
                         {
                             product?.data?.inventory_number > 0 ? (
-                                <Button
-                                    className="p-6 font-medium uppercase text-lg text-white"
-                                    onClick={() => { handleSubmit() }}
-                                >Mua Ngay</Button>
+                                isLoading ?
+                                    <Button disabled className="p-6 font-medium uppercase text-lg text-white">
+                                        <Loader2 className="animate-spin" />
+                                        Loading
+                                    </Button> : <Button
+                                        className="p-6 font-medium uppercase text-lg text-white"
+                                        onClick={() => { handleSubmit() }}
+                                    >Mua Ngay</Button>
                             ) : (
                                 <Button
                                     className="p-6 font-medium uppercase text-lg text-white mb-4 bg-slate-500 px-4 py-2 rounded"

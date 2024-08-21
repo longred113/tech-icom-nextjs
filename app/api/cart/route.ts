@@ -14,7 +14,6 @@ export async function GET(req: NextRequest) {
             }
         });
         const data = await response.json();
-        console.log(data);
         return NextResponse.json({ data } as any);
     }
     if (param === 'GETADDRESSDETAIL') {
@@ -77,6 +76,27 @@ export async function POST(req: Request) {
             body: JSON.stringify({
                 products: body.products,
                 cartInfo: body.cartInfo,
+            })
+        });
+        const data = await response.json();
+        return NextResponse.json({ data } as any);
+    }
+}
+
+export async function DELETE(req: Request) {
+    const url = new URL(req.url);
+    const param = url.searchParams.get("param");
+    const body = await req.json();
+    const token = cookies().get('Auth-token')?.value;
+    if (param === "DELETEITEM") {
+        const response = await fetch(`${BASE_URL}/api/cart/delete-item`, {
+            method: 'DELETE',
+            headers: {
+                "Authorization": `${token}`,
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify({
+                productId: body.productId,
             })
         });
         const data = await response.json();

@@ -1,6 +1,9 @@
+import { useCart } from "./cartContext";
+
 export default function Footer() {
     return (
         <footer className="flex items-center justify-center w-full bg-black">
+
             <div className="flex flex-wrap xl:w-8/12 my-8 text-white text-sm">
                 <div className="w-1/5 px-2">
                     <div className="uppercase font-medium mb-2">

@@ -9,6 +9,8 @@ import { IoMdCart } from "react-icons/io";
 import { MdAccountCircle, MdSearch } from "react-icons/md";
 import SidebarMobile from "./sidebar-mobile";
 import deleteCookie from "@/other/deleteCoookie";
+import { CartProvider, useCart } from "./cartContext";
+import { get } from "http";
 interface User {
     name: string;
     email: string;
@@ -18,21 +20,7 @@ export default function TopBar() {
     const [cart, setCart] = useState<any>(null);
     const [isSticky, setIsSticky] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-
-    const getCart = async () => {
-        try {
-            const res = await fetch("/api/cart?param=GETCART", {
-                method: "GET",
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                },
-            })
-            const data = await res.json();
-            setCart(data.data.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    const { cartItems, fetchCart, clearCart } = useCart();
 
     const handleScroll = () => {
         if (window.scrollY > 0) {
@@ -41,6 +29,11 @@ export default function TopBar() {
             setIsSticky(false);
         }
     };
+
+    // const getData = async () => {
+    //     const data = await fetchCart();
+    //     setCart(data);
+    // }
 
     useEffect(() => {
         const token = document.cookie.split('; ').find(row => row.startsWith('Auth-token='));
@@ -66,15 +59,13 @@ export default function TopBar() {
 
     useEffect(() => {
         if (user?.name !== undefined) {
-            getCart();
+            fetchCart();
         }
     }, [user]);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
     };
-    console.log(cart);
-
     return (
         <nav className={`bg-primary p-4 transition-all duration-300 ease-in-out ${isSticky ? 'sticky top-0 left-0 w-full z-50' : ''}`}>
             <div className="mx-auto flex justify-between items-center text-sm xl:w-8/12">
@@ -101,9 +92,12 @@ export default function TopBar() {
                             <IoMdCart className="text-2xl" />
 
                             <div className="md:right-3 -right-1 -top-2.5 absolute bg-red-600 text-white px-1.5 text-sm rounded-full text-center">
-                                {cart?.cartItems.length > 0 ? (
-                                    cart?.cartItems?.reduce((acc: any, item: any) => acc + item.quantity, 0)
-                                ) : (null)}
+                                {cartItems.length > 0 ? (
+                                    cartItems?.reduce((acc, item) => acc + item.quantity, 0) || 0
+                                ) : null}
+                                {/* {
+                                    cart && cart.length > 0 ? (cart?.reduce((acc: any, item: any) => acc + item.quantity, 0) || 0) : null
+                                } */}
                             </div>
                         </div>
                         <p className="md:flex hidden justify-center items-center text-white">
@@ -150,6 +144,7 @@ export default function TopBar() {
                                     localStorage.removeItem('userData');
                                     setUser(null);
                                     setCart(null);
+                                    clearCart();
                                     deleteCookie();
                                 }}>
                                     Đăng xuất
@@ -160,5 +155,6 @@ export default function TopBar() {
                 </div>
             </div>
         </nav>
+
     );
 }

@@ -13,6 +13,7 @@ import Link from "next/link";
 import CartStep from "@/app/components/cartstep";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useCart } from "@/app/components/cartContext";
 
 
 
@@ -27,6 +28,7 @@ export default function CartInfo() {
     const [wards, setWards] = useState([]);
     const [selectedWards, setSelectedWards] = useState('');
     const router = useRouter();
+    const { fetchCart } = useCart();
 
     const formSchema = z.object({
         username: z.string().min(2, {
@@ -64,14 +66,8 @@ export default function CartInfo() {
     }
     const getCart = async () => {
         try {
-            const res = await fetch("/api/cart?param=GETCART", {
-                method: "GET",
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                },
-            });
-            const data = await res.json();
-            setTotalPrice(data.data.data.totalPrice);
+            const res = await fetchCart();
+            setTotalPrice(res.data.data.totalPrice);
         } catch (error) {
             console.log(error);
         }

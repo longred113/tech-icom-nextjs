@@ -1,10 +1,11 @@
 'use client';
 
 import { ChevronDown, ChevronRight, Headphones, Keyboard, Laptop, Monitor, Mouse, PcCase } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Sidebar = ({ onHover, onLeave }: any) => {
+    const [category, setCategory] = useState<any>([]);
     const items = [
         { name: 'Laptop', component: <Laptop />, value: 'laptop' },
         { name: 'PC', component: <PcCase />, value: 'pc' },
@@ -17,7 +18,23 @@ const Sidebar = ({ onHover, onLeave }: any) => {
         { name: 'About Us', path: '/about' },
         { name: 'Team', path: '/about/team' },
         { name: 'Careers', path: '/about/careers' }
-    ]
+    ];
+
+    const getCategory = async () => {
+        const res = await fetch("/api/category?param=GETALL", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        });
+
+        const data = await res.json();
+        setCategory(data.data.data);
+    }
+
+    useEffect(() => {
+        getCategory();
+    }, []);
 
     const [expandedItem, setExpandedItem] = useState(null);
 
