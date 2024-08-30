@@ -137,9 +137,11 @@ export default function TopBar() {
                                 </Avatar>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56 bg-primary">
-                                <DropdownMenuItem className="text-white">
-                                    Profile
-                                </DropdownMenuItem>
+                                <Link href={"/profile"}>
+                                    <DropdownMenuItem className="text-white">
+                                        Profile
+                                    </DropdownMenuItem>
+                                </Link>
                                 <DropdownMenuItem className="text-white" onClick={() => {
                                     localStorage.removeItem('userData');
                                     setUser(null);

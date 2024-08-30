@@ -1,17 +1,23 @@
 import { BASE_URL } from "@/other/axios";
 import { NextApiRequest } from "next";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const param = url.searchParams.get("param");
-    const response = await fetch(`${BASE_URL}/api/user/profile`, {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-    const data = await response.json();
-    return NextResponse.json({ data } as any);
+    const token = cookies().get('Auth-token')?.value;
+    if (param === "DETAIL") {
+        const response = await fetch(`${BASE_URL}/api/user/profile`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `${token}`,
+            },
+        });
+        const data = await response.json();
+        return NextResponse.json({ data } as any);
+    }
 }
 export async function POST(req: Request) {
     const url = new URL(req.url);

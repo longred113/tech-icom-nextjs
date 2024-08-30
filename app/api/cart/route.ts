@@ -102,4 +102,16 @@ export async function DELETE(req: Request) {
         const data = await response.json();
         return NextResponse.json({ data } as any);
     }
+
+    if (param === "DELETECART") {
+        const response = await fetch(`${BASE_URL}/api/cart/delete`, {
+            method: 'DELETE',
+            headers: {
+                "Authorization": `${token}`,
+                "Content-Type": 'application/json',
+            },
+        });
+        const data = await response.json();
+        return NextResponse.json({ data } as any);
+    }
 }

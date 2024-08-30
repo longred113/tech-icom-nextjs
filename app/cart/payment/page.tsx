@@ -20,7 +20,7 @@ export default function CartPayment() {
     const [products, setProducts] = useState<any[]>([]);
     const [userPayInfo, setUserPayInfo] = useState<any>(null);
     const [customData, setCustomData] = useState<any[]>([]);
-    const { fetchCart } = useCart();
+    const { fetchCart, deleteCart } = useCart();
 
     const router = useRouter();
 
@@ -49,14 +49,15 @@ export default function CartPayment() {
                 body: JSON.stringify({ products: customData, cartInfo: userPayInfo }),
             });
             const data = await res.json();
-            console.log(data);
             if (data.data.code === 200) {
+                await deleteCart();
                 router.push("/cart/thankyou");
             }
         } catch (error) {
             console.log(error);
         }
     }
+
     const payInfo = () => {
         const data = localStorage.getItem("formData");
         if (data) {

@@ -4,10 +4,11 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 interface CartContextType {
     cartItems: any[];
     fetchCart: () => Promise<any>;
-    addToCart: (item: any) => Promise<any>
+    addToCart: (item: any) => Promise<any>;
     updateCart: (item: any) => void;
     clearCart: () => void;
     deleteCartItem: (item: any) => void;
+    deleteCart: () => Promise<any>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -112,8 +113,22 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const deleteCart = async () => {
+        try {
+            await fetch("/api/cart?param=DELETECART", {
+                method: "DELETE",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+                body: JSON.stringify({}),
+            });
+        } catch (error) {
+
+        }
+    }
+
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, updateCart, fetchCart, clearCart, deleteCartItem }}>
+        <CartContext.Provider value={{ cartItems, addToCart, updateCart, fetchCart, clearCart, deleteCartItem, deleteCart }}>
             {children}
         </CartContext.Provider>
     );
